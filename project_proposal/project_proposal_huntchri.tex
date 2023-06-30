@@ -1,0 +1,207 @@
+\documentclass{article}
+\usepackage[margin=.9in]{geometry}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{natbib}
+\usepackage{booktabs}
+\lstset{
+  basicstyle=\small\ttfamily,
+  breaklines=true,
+  frame=single,
+  language=Verilog,
+  numberstyle=\tiny,
+  showstringspaces=false
+}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{\baselineskip}
+\definecolor{mycolor}{rgb}{0.1, 0.1, 0.5}
+\title{\textcolor{mycolor}{\textbf{{\huge Development and Implementation of a Low-Cost Electrochemistry Lab Kit for Educational Outreach}}}}
+\author{Student: Christopher Hunt \\ Mentor: Dr. Kelsey Stoerzinger}
+\date{}
+\usepackage{graphicx} 
+\usepackage{fancyhdr}
+
+\begin{document}
+\pagestyle{fancy}
+\fancyhf{}
+\rfoot{}
+\lfoot{Christopher Hunt}
+\lhead{Development and Implementation of a Low-Cost Electrochemistry Lab Kit for Educational Outreach}
+\rhead{\thepage}
+\maketitle
+\section*{\textcolor{mycolor}{Introduction}}
+Electrochemistry holds promising potential for tackling challenges in energy sustainability and environmental conservation. However, access to relevant educational resources and equipment often proves to be a challenge, particularly in underserved communities and educational institutions operating with limited funding.
+
+Existing research has made considerable strides in developing low-cost potentiostats, yet the real-world application of such instruments in education requires an approach that synthesizes this research into a comprehensive, user-friendly framework. This project aims to address this gap, proposing the creation of an affordable, accessible lab kit based on a do-it-yourself potentiostat for use in electrochemistry education.
+
+The main drive behind this project lies in its potential impact on educational accessibility and its promotion of active learning in electrochemistry. By developing a lab kit that educators can readily implement in undergraduate or high school level classes, this project could help foster a new generation of scientists equipped to address global energy challenges.
+
+In addition to constructing and testing a prototype, the project will involve a comparison of the DIY potentiostat's performance with professional-grade equipment. The goal of this benchmarking is to ensure that the lab kit provides an accurate and reliable tool for students to explore electrochemistry concepts and processes.
+
+\section*{\textcolor{mycolor}{Student Project Scope}}
+In this project, the student will be responsible for bringing together existing literature to design and build a prototype potentiostat. Applying their electrical engineering skills, the student will develop a device capable of performing cyclic voltammetry experiments, translating theory into practice.
+
+Under mentorship, the student will not only dive into software development and physical hardware construction but will also acquire an understanding of how to integrate and synthesize existing research into a coherent, functional product. The student will then validate the device through comprehensive testing, comparing its performance to that of professional-grade instruments to ensure accuracy and reliability.
+
+Finally, the student will take on the task of creating a detailed lab guide, documenting the construction process, operating instructions, and educational applications. This guide will serve as a comprehensive resource for educators aiming to incorporate this project into their curriculum, thus enhancing accessibility to hands-on electrochemistry education.
+
+\section*{\textcolor{mycolor}{Primary Task Deadlines and Project Timeline}}
+\begin{table}[H]
+  \centering
+  \begin{tabular}{l|r}
+  Project Proposal & July 10, 2023 \\
+  Literature Review & June 17, 2023 \\
+  Methodology & June 24, 2023 \\
+  Figures, Tables, and Equations & August 7, 2023 \\
+  Rough Draft of Final Report & August 14, 2023 \\
+  Final Report & August 25, 2023\\
+  \end{tabular}
+  \end{table}
+
+  \begin{table}[H]
+    \centering
+    \begin{tabular}{|l|p{10cm}|}
+    \hline
+    Week 1 (6/20-6/23) & Meet with mentor and become oriented with the lab and develop a project plan. Finish all lab safety certificates and gain student access to the lab. Create a vocabulary list and begin literature search. Begin a crash course in Electrochemistry through textbook reading and watching pre-recorded lectures.\\
+    \hline
+    Week 2 (6/26-6/30) & Continue study of the fundamentals of electrochemistry. Work with a PhD student in lab, begin to gain familiarity with lab instrumentation, experimentation and data analysis. Accumulate technical information on the construction of the potentiostat and begin circuit design. Begin literature review.\\
+    \hline
+    Week 3 (7/3-7/7) & Develop a concise project proposal that is attainable within program time limits. Continue study of Electrochemistry and following PhD student in lab. Main emphasis of study will be on hardware development and testing parameters for the potentiostat.\\
+    \hline
+    Week 4 (7/10-7/14) & Project proposal is due. Solidify hardware design, begin implementing design in hardware and begin testing. Finalize literature search and review.\\
+    \hline
+    Week 5 (7/17-7/20) & Literature review is due. Begin to define more rigorously the project scope and methodology. Implement working understanding of Electrochemistry into project more thoroughly. Begin software side of potentiostat design.\\
+    \hline
+    Week 6 (7/24-7/28) & Methodology is due. Hardware design will be finalized. Develop circuit design implementation and construction may begin. Continue software design. Begin final report.\\
+    \hline
+    Week 7 (7/31-8/4) & Finish construction of the potentiostat and finalize data analysis software. Work with mentor and PhD student to design lab experiments that will be used to compare the DIY potentiostat to a lab potentiostat.\\
+    \hline
+    Week 8 (8/7-8/11) & Figures, tables, and equations are due. Execute experiments designed from the previous week. Perform experiments and collect data, troubleshoot as necessary.\\
+    \hline
+    Week 9 (8/14-8/18) & Rough draft is due. Finalize any experiments. Focus on final report and data analysis.\\
+    \hline
+    Week 10 (8/21-8/25) & Finish up any last minute lab related activities. Finish and turn in final report.\\
+    \hline
+    \end{tabular}
+    \end{table}
+
+\newpage 
+\section*{\textcolor{mycolor}{Literature Search}}
+A literature search was conducted utilizing Google Scholar to find relevant articles and studies. The search was conducted using the keywords ``potentiostat,'' ``education,'' and ``laboratory''. Approximately 25,100 results were generated from the search, reflecting a substantial body of work on the subject. The literature scan revealed a variety of approaches towards building low-cost potentiostats, many of which have applications in education and laboratory settings. Several relevant papers garnered from this search are: 
+
+
+Building a Microcontroller Based Potentiostat: An Inexpensive and Versatile Platform for Teaching Electrochemistry and Instrumentation.
+Gabriel N. Meloni.
+Journal of Chemical Education 2016 93 (7), 1320-1322.
+DOI: 10.1021/acs.jchemed.5b00961.
+
+An Easily Fabricated Low-Cost Potentiostat Coupled with User-Friendly Software for Introducing Students to Electrochemical Reactions and Electroanalytical Techniques.
+Yuguang C. Li, Elizabeth L. Melenbrink, Guy J. Cordonier, Christopher Boggs, Anupama Khan, Morko Kwembur Isaac, Lameck Kabambalika Nkhonjera, David Bahati, Simon J. Billinge, Sossina M. Haile, Rodney A. Kreuter, Robert M. Crable, and Thomas E. Mallouk.
+Journal of Chemical Education 2018 95 (9), 1658-1661.
+DOI: 10.1021/acs.jchemed.8b00340.
+
+A New, Low-cost Potentiostat for Environmental Measurements with an Easy-to-use PC Interface.
+Karlheinz Kellner, Thomas Posnicek, Jörg Ettenauer, Karen Zuser, Martin Brandl.
+Procedia Engineering.
+Volume 120
+2015,
+Pages 956-960,
+ISSN 1877-7058.
+https://doi.org/10.1016/j.proeng.2015.08.820.
+
+CheapStat: An Open-Source, “Do-It-Yourself” Potentiostat for Analytical and Educational Applications.
+Aaron A. Rowe,Andrew J. Bonham,Ryan J. White,Michael P. Zimmer,Ramsin J. Yadgar,Tony M. Hobza,Jim W. Honea,Ilan Ben-Yaacov,Kevin W. Plaxco.
+Published: September 13, 2011.
+https://doi.org/10.1371/journal.pone.0023783.
+
+Design, Development, and Characterization of an Inexpensive Portable Cyclic Voltammeter.
+Jenna R. Mott, Paul J. Munson, Rodney A. Kreuter, Balwant S. Chohan, and Danny G. Sykes.
+Journal of Chemical Education 2014 91 (7), 1028-1036.
+DOI: 10.1021/ed4004518.
+\section*{\textcolor{mycolor}{Key Words}}
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|l|p{10cm}|}
+  \hline
+  Keyword & Definition\\
+  \hline
+  Electrochemical reactions & Chemical reactions that involve the transfer of electrons from one species to another.\\
+  \hline
+  Redox reactions & A type of chemical reaction that involves a transfer of electrons between two species; an abbreviation for reduction-oxidation reaction.\\
+  \hline
+  Half-cell & A structure that contains a conductive electrode and a surrounding conductive electrolyte separated by a naturally occurring Helmholtz double layer. Chemically, half-cells have the tendency to generate an electric potential.\\
+  \hline
+  Electrolyte & A substance that produces an electrically conducting solution when dissolved in a polar solvent, such as water.\\
+  \hline
+  Electrode & A conductor through which electricity enters or leaves an object, substance, or region.\\
+  \hline
+  Anode & The electrode where oxidation occurs.\\
+  \hline
+  Cathode & The electrode where reduction occurs.\\
+  \hline
+  Oxidation & A reaction that involves the loss of electrons.\\
+  \hline
+  Reduction & A reaction that involves the gain of electrons.\\
+  \hline
+  Faraday's law & The law stating that the amount of substance produced at an electrode during electrolysis is directly proportional to the quantity of electricity that passes through the solution.\\
+  \hline
+  Potentiostat & An electronic instrument that controls the voltage difference between a Working Electrode and a Reference Electrode contained in an electrochemical cell.\\
+  \hline
+  Cyclic voltammetry & A type of potentiodynamic electrochemical measurement where the potential at the working electrode is ramped linearly vs. time.\\
+  \hline
+    Working Electrode & The electrode in an electrochemical system on which the reaction of interest is occurring. The working electrode is often used in conjunction with an auxiliary electrode and a reference electrode in a three-electrode system.\\
+    \hline
+    Reference Electrode & A electrode which has a stable and well-known electrode potential. \\
+    \hline
+    Auxiliary (Counter) Electrode & In a three-electrode cell, the electrode into which current is passed to complete the circuit through the electrolyte. \\
+    \hline
+    Redox Potential &  \\
+    \hline
+    I-V Curve & Short for Current-Voltage Curve, it's a graphical representation of the current developed in a component or circuit as a function of the applied voltage.\\
+    \hline
+    Voltammetry & A category of electroanalytical methods used in analytical chemistry. In voltammetry, information about an analyte is obtained by measuring the current as the potential is varied.\\
+    \hline
+  \end{tabular}
+\end{table}
+   
+\newpage
+
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|l|p{10cm}|}
+  \hline
+  Keyword & Definition\\
+  \hline
+    Scan Rate & In cyclic voltammetry, the scan rate refers to the speed at which the voltage is ramped up and down across the working electrode. It is often measured in millivolts per second (mV/s). The scan rate can affect the shape of the cyclic voltammogram and provide information about the kinetics of the redox reactions.\\
+    \hline
+    Faradaic Processes & These are reactions that involve electron transfer, such as redox reactions. In a Faradaic process, charge is transferred across the electrical double layer at the electrode/electrolyte interface.\\
+    \hline
+    Non-Faradaic Processes & These are electrochemical reactions that don't involve a transfer of electrons. They can influence the electrical behavior of the electrode but do not involve oxidation or reduction of the electrolyte.\\
+    \hline
+    Peak Current & In a voltammogram, the peak current is the maximum current that is observed. This peak corresponds to the potential at which the rate of the redox reaction is at its maximum.\\
+    \hline
+    Peak Potential & The specific potential at which maximum current is observed in a voltammogram. It corresponds to the electrode potential where the rate of the redox reaction is highest.\\
+    \hline
+    Redox Couple & A redox couple is a part of a half-reaction considered in both directions. In the context of electrochemistry, it usually refers to a pair of substances that differ by a certain number of electrons.\\
+    \hline
+    Open Circuit Potential & The potential of an electrochemical cell when no current is flowing. It represents the equilibrium state of the cell.\\
+    \hline
+    Half-cell & A structure that contains a conductive electrode and a surrounding conductive electrolyte. Electrochemical cells consist of two half-cells.\\
+    \hline
+    Energy Storage & The capture of energy produced at one time for use at a later time. In the context of electrochemistry, this often involves storing energy in electrochemical form, such as in a battery or supercapacitor.\\
+    \hline
+    Electrochemical Cell & A device that can generate electrical energy from chemical reactions or use electrical energy to drive chemical reactions.\\
+    \hline
+    Electrode Potential & The electromotive force of a half-cell in an electrochemical cell. The difference in potential between electrodes in a galvanic cell leads to current flow if the circuit is closed.\\
+    \hline
+  \end{tabular}
+\end{table}
+
+
+
+
+\end{document}
