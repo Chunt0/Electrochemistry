@@ -1,2 +1,1 @@
-# Intel Electrochemical Engineering Scholarship
-# Electrochemistry
+# Intel Electrochemical Engineering Internship
