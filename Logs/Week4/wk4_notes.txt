@@ -1,0 +1,113 @@
+Hardware Design:
+
+10 bit DAC is working appropriately
+
+using data direction registers to set up output pins and set calculated values for output.
+
+Requires an op-amp buffer to isolate voltage from interacting with the rest of the circuit
+
+this is fed into an inverting amplifier that is using a biasing voltage to move it to the appropriate range
+
+currently, there will be idealized component values but the actual values will have to be adjusted when implementing via students - this will enhance their circuit skills and introduce them to concepts of component limitations.
+
+EIS might not be feasable to accomplish within a limited hardware implementation. 
+
+CV is limit as well, -1.07v to +1.07v but I was able to test system againts the dummy cell. measuring current from the "working electrode" measured a range from -200 microamps to 200 microamps.
+
+serial data aquisition was a simple fix. using PySerial as the method for reading serial data, and then matplotlib to plot incomming data.
+
+still need to work on the transimpedance amplifier to convert the current to voltage within the readable range of the analog in pins.
+
+
+WED workshop:
+
+it has to happen we jsut dont know when
+
+contradiction in building - clsoe to water, lowlying areas and vulnerable areas. they grow the fastest
+
+some claim the CC is causing all the problems, rising sea level really?
+
+inersectionality of all the different blah blahs.
+
+feels like some armagedon porn. very religious. if we stick to the OLD WAY we will falling
+
+resiliency - bending without breaking, to snap back, gain from experience. its the neighborhood that does it, revitalize the "community" with the "community" leading the way. what is the community?
+
+"inclusive"
+
+using fear as motivation to create change ---
+
+constant work in progress - this idea of communist continual work, you must always work to attain the communist ideal.
+
+saving cities...? collective power....
+
+this is like some bullshit propoganda.
+
+a lot of defining terms and centering the motivation, no science or research really, just claims.
+
+japanese guy is the only one talking about real things - detailing the fukashima disaster. 
+
+building code in japan a history of creating resistant buildings... resiliency.
+
+change the code improve the code make it more stringent... government action
+
+that's the day the delta began to DIE... there's no info, it's all emotional arguements through story-telling. 
+
+fukashima, katrina,
+
+human component and tech component. essentially pleading for communism.
+
+movie is making emotional arguements to try to sway peoples behavior
+
+lots of buzz words
+
+stakeholder stakeholder stakeholder....
+
+collective approach?? sounds like bullshit.
+
+detroit is next, flint water crisis.
+
+the music is really nerve wracking.
+
+3% is fresh water - of that 3% most of it is tied up in glaciers... 1% is available.
+
+more crop for the drop...
+
+much drier than 20th century
+
+controlling peoples water consumption at scale...
+
+el paso, example of how to manage water 
+
+medellin, columbia, transit system. it couldnt be done!!
+
+we can't tell if the libraries really helped for at elast 20 years
+
+chief resilience officer??
+
+we design our way out of problems
+
+you design somethign that takes into account shortterm and unnenticipated events. 48% gas is attributed to builders
+
+the biggest problem of all, the planet is at stake and we caused it. we've embraced it. mission by 2030 get building section to carbon neutral.
+
+building a new new york city ever month - this dude is crazy. he wants to transform the world in his image.
+
+survival rates were higher with more community trust. how do you measure that? building social ties...
+
+what programs work to build these ties? - self organization...
+
+self-organization, no top down control
+more options can help reduce chance of failure - redundancy.
+
+it's not a solution, it's a change in attitude
+
+
+---------------------------------------------
+individual free write-
+
+- the scenario about fukushima spoke to me the most, japan has a history of building around natural disasters and the need to have resilient structures to meet the unexpected events. community engagement helped survival rates, but still lots of damage has been done, are there more ways in which distasters like these can be mitigated through planning?
+
+- using fear to motivate people to action in a desired direction can potentially be effective.
+
+- The film lacked any rigorous data, it was mostly buzz words, platitudes, and emotional arguements to try to motivate people to act. 
