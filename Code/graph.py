@@ -18,7 +18,7 @@ def read_data(file_path):
 data_file = 'data.txt'  # Update with your file path
 x, y = read_data(data_file)
 
-plt.plot(x, y, 'o')
+plt.scatter(x, y)
 plt.xlabel('V_in')
 plt.ylabel('I_out')
 plt.title('Data Plot')

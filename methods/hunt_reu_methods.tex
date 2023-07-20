@@ -1,0 +1,48 @@
+\documentclass{article}
+\usepackage[margin=.9in]{geometry}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{natbib}
+\usepackage{booktabs}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{\baselineskip}
+\definecolor{mycolor}{rgb}{0.1, 0.1, 0.5}
+\title{\textcolor{mycolor}{\textbf{{\huge Development and Implementation of a Low-Cost Electrochemistry Lab Kit for Educational Outreach: Methodology}}}}
+\author{Student: Christopher Hunt \\ Mentor: Dr. Kelsey Stoerzinger}
+\date{}
+\usepackage{graphicx} 
+\usepackage{fancyhdr}
+
+\begin{document}
+\pagestyle{fancy}
+\fancyhf{}
+\rfoot{}
+\lfoot{Christopher Hunt}
+\lhead{Development and Implementation of a Low-Cost Electrochemistry Lab Kit for Educational Outreach: Methodology}
+\rhead{\thepage}
+\maketitle
+\subsection*{Introduction}
+This research undertakes a systematic examination, construction, and testing of various Arduino-based potentiostat designs. After examining several designs, we focused our attention on the Meloni Design due to its detailed circuit layout and ease of replication. We further enhanced this design by incorporating a 10-bit digital-analog converter to achieve a higher resolution control signal. The methodology section thus elaborates on the research design, data collection, data analysis processes, and the limitations encountered in the study.
+
+\subsection*{Research Design}
+The research is grounded in a comparative analysis of Arduino-based designs, known for their affordability, user-friendliness, and educational value. The Meloni Design was chosen based on its detailed schematic and commonality in the potentiostat designs literature. This research expands on Meloni’s approach by improving the control signal's resolution using a 10-bit digital-analog converter.
+
+Furthermore, to generate the necessary voltages for Cyclic Voltammetry, an inverting amplifier is employed to scale and bias the signal. The control amplifier is then set up with the control signal in the negative input terminal, the reference electrode in the positive input, and the op-amp output connected to the counter electrode.
+
+To convert the output current into a voltage detectable by the Arduino, the working electrode current is placed into a transimpedance amplifier. The modifications to the original Meloni Design were made in line with theoretical circuit analysis techniques, offering a greater learning opportunity for students.
+
+\subsection*{Data Collection and Analysis}
+We are adopting a twofold data collection process. First, we will collect circuit output measurements to validate each stage of the design. Each circuit’s output is evaluated every millisecond, resulting in a dense dataset. Next, we will compare the output of our enhanced Meloni Design against the benchmark BioLogic SP-200 potentiostat. We chose the BioLogic SP-200 due to its established performance and widespread use in the scientific community.
+
+The acquired data will be processed using Python, which allows for flexible and precise analysis. Cyclic voltammetry of the Ferro-ferricyanide reaction, common in literature, will be performed to test and compare the potentiostats.
+
+\subsection*{Research Limitations}
+Our research, while thorough, encounters certain limitations. The resolution of the cyclic voltammetry control signal and the analog input detector is 4.88 millivolts, which may not be sufficient for some highly sensitive applications. In addition, aligning the output current to a 0-5v scale presents a challenge as it's not entirely accurate. The signal conversion hardware assumes a maximum and minimum current, which could be variable. If the current is outside this range, the sensor either outputs 0 or 1023, meaning the measurements could be clipped or skewed.
+
+\subsection*{Conclusion}
+This research presents a comprehensive methodology to assess, improve, and compare Arduino-based potentiostat designs. While there are some limitations, the study leverages the strengths of existing designs, particularly the Meloni Design, and contributes valuable enhancements to this field. Further studies can build on these findings, optimizing and addressing the identified limitations.
+
+\end{document}
