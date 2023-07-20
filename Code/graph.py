@@ -8,7 +8,7 @@ def read_data(file_path):
         for line in file:
             data = line.strip().split('\t')
             if len(data) == 2:
-                data[0] = (2/1023)*float(data[0]) - 1
+                data[0] = (.5/1023)*float(data[0])
                 data[1] = ((4/1023)*float(data[1]) - 2)/12500*10**6
                 x_values.append(data[0])
                 y_values.append(data[1])
