@@ -1,5 +1,4 @@
 import serial
-import signal
 import sys
 
 # Serial port configuration

@@ -18,7 +18,7 @@ def read_data(file_path):
 
     return x_values, y_values
 
-data_file = 'data.txt'  # Update with your file path
+data_file = 'data1.txt'  # Update with your file path
 x, y = read_data(data_file)
 
 plt.scatter(x, y)
