@@ -1,3 +1,6 @@
+# Christopher Hunt
+# graph.py
+
 import matplotlib.pyplot as plt
 
 def read_data(file_path):

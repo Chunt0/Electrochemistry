@@ -1,3 +1,5 @@
+# Christopher Hunt
+# serial_2_txt.py
 import serial
 import sys
 

@@ -7,6 +7,15 @@
 \usepackage{listings}
 \usepackage{natbib}
 \usepackage{booktabs}
+\usepackage{listings}
+\lstset{
+  basicstyle=\small\ttfamily,
+  breaklines=true,
+  frame=single,
+  language=Python,
+  numberstyle=\tiny,
+  showstringspaces=false
+}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{\baselineskip}
 \definecolor{mycolor}{rgb}{0.1, 0.1, 0.5}
@@ -92,7 +101,7 @@ Balancing these criteria, we found the Meloni Design most effectively met our st
 
 In this section, we outline the methods employed in the development and mbenchmarking of our potentiostat design. The aim is to provide a comprehensive understanding of our approach, which involved two key processes. First, we modified the existing Meloni Design and developed an Arduino and Python based software for control and data collection. Second, we implemented a a benchmarking protocol using a Ferri/ferrocyanide redox reaction to evaluate the performance of our design. 
 
-\subsubsection*{Hardware and Software Design}
+\subsubsection*{Potentiostat Design: Hardware and Software Modifications Based on the Meloni Design}
 
 The Meloni Design is comprised of 7 stages (fig. 2).
 \begin{enumerate}
@@ -123,6 +132,8 @@ Our research, while thorough, encounters certain limitations. The resolution of 
 
 This research presents a comprehensive methodology to assess, improve, and compare Arduino-based potentiostat designs. While there are some limitations, the study leverages the strengths of existing designs, particularly the Meloni Design, and contributes valuable enhancements to this field. Further studies can build on these findings, optimizing and addressing the identified limitations.
 
+\subsubsection*{Benchmarking: Ferri/Ferrocyanide Redox Reaction Electrochemical Cell Setup}
+
 \subsection*{Results}
 
 \subsection*{Discussion}
@@ -138,5 +149,251 @@ Cordova-Huaman AV, Jauja-Ccana VR, et al. (2021) Low-cost smartphone-controlled 
 Meloni, GN (2016). Building a Microcontroller Based Potentiostat: A Inexpensive and Versatile Platform for Teaching Electrochemistry and Instrumentation. \emph{Journal of Chemical Education} 93(7), 1320-1322. 
 
 Rowe AA, Bonham AJ, et al. (2011) CheapStat: An Open-Source, ‘‘Do-It-Yourself’’ Potentiostat for Analytical and Educational Applications. \emph{PLoS ONE} 6(9).
+
+\newpage
+\section*{Appendix}
+\subsubsection*{1}
+\begin{lstlisting}
+    // Christopher Hunt
+    // potentiostat.ino
+    
+    // User Set Init Params
+    const int CELL_OUTPUT = A0; // Analog Read pin to read electrochemical cell output. Reads voltage data from TIA in circuit.
+    const int CV_VOLTAGE = A1; // Reads current voltage being supplied to the potentiostat.
+    const uint8_t TRIGGER_PIN = 13; // Trigger pin. Detecting push button to trigger the CV.
+    const int MODE = 0; // Mode 0 is CV. Designed to potentially expand to perform EIS
+    
+    // Cyclic Voltammetry : mode = 0
+    const float SCAN_RATE = .02; // The rate of the CV scan in V/s
+    const int CYCLES = 100; // How many times the CV is performed
+    
+    /**
+     * Function: cvMode
+     * ----------------
+     * Implements the CV (Cyclic Voltammetry) mode of operation. The function performs a series
+     * of CV cycles until the specified number of cycles (CV_CYCLES) is reached. It controls the
+     * voltage output based on the elapsed time and scan rate, updating the DAC ports to generate
+     * the desired waveform.
+     *
+     *   The function utilizes a while loop to execute the CV cycles until the cycle count reaches
+     *   the desired number of cycles. It maintains the elapsed time since the start of the CV mode
+     *   using the `micros()` function. By comparing this elapsed time with the scan rate and direction,
+     *   it calculates the corresponding voltage value (`value`) for the DAC ports.
+     *
+     *   The function employs an if-else statement to determine whether the voltage should increment
+     *   or decrement based on the current direction (`forward`). The `adj_scan_rate` is used to adjust
+     *   the rate of change per unit time. If the calculated value exceeds the range of 0 to 1023,
+     *   it is clamped to the corresponding limit, and the direction is switched accordingly.
+     *
+     *   The function then calls the `portSelectDAC` function to configure the DAC ports with the
+     *   calculated voltage value. The DAC value is split into two bytes (`portdb_bytes[0]` and `portdb_bytes[1]`),
+     *   which are then assigned to the appropriate DAC ports. This enables the generation of the desired waveform.
+     *
+     *   Additionally, the current `value` is printed to the Serial Monitor using `Serial.println()`,
+     *   providing real-time feedback and monitoring of the CV operation.
+     */
+    void cvMode() {
+      const float scan_rate = SCAN_RATE * (10230.0 / 5000000.0);
+      bool forward = true;
+      int cycle = 0;
+      unsigned long start_time = micros();
+      unsigned long time = 0;
+      float value = 0;
+      int rounded_value = 0;
+      int sensor_value = 0;
+      int control_value = 0;
+      unsigned long last_read_time1 = 0;
+      unsigned long last_read_time2 = 0;
+      unsigned long sensor_data[10];
+      unsigned long control_data[10];
+      int sensor_data_index = 0;
+      const unsigned long read_interval1 = 100;   // 
+      const unsigned long read_interval2 = 1000;  // Microseconds between reads
+      const float inv_num_readings = 0.1;  // 1/10 for 10 readings
+    
+      while (cycle < CYCLES) {
+        time = micros() - start_time;
+    
+        if (forward) {
+          value = scan_rate * time;
+          rounded_value = (int)value;  // Typecast directly to int
+          if (rounded_value >= 1023) {
+            rounded_value = 1023;
+            forward = false;
+            start_time = micros();
+          }
+    
+        } else {
+          value = -scan_rate * time + 1023;
+          rounded_value = (int)value;  // Typecast directly to int
+    
+          if (rounded_value <= 0) {
+            rounded_value = 0;
+            forward = true;
+            start_time = micros();
+            cycle++;
+          }
+        }
+    
+        // Send value to 10-bit DAC
+        PORTD = (rounded_value << 2) & 0xFC;
+        PORTB = (rounded_value >> 6) & 0x0F;
+    
+        // Read sensor data every read_interval1 microseconds
+        if (micros() - last_read_time1 >= read_interval1) {
+          last_read_time1 = micros();
+          sensor_data[sensor_data_index] = analogRead(CELL_OUTPUT);
+          control_data[sensor_data_index] = analogRead(CV_VOLTAGE);
+          sensor_data_index++;
+        }
+    
+        // Calculate average and send data every read_interval2 microseconds
+        if (micros() - last_read_time2 >= read_interval2) {
+          last_read_time2 = micros();
+          int sum_sensor = 0;
+          int sum_control = 0;
+          for (int i = 0; i < 10; i++) {
+            sum_sensor += sensor_data[i];
+            sum_control += control_data[i];
+          }
+          sensor_data_index = 0;
+          sum_sensor *= inv_num_readings;  // Multiply by the inverse to avoid division
+          sum_control *= inv_num_readings; 
+          sensor_value = sum_sensor;
+          control_value = sum_control;
+          Serial.print(control_value);
+          Serial.print('\t');
+          Serial.println(sensor_value);
+        }
+      }
+    }
+    
+    
+    
+    /**
+     * Function: setup
+     * ----------------
+     * Configures the initial setup and pin modes for an Arduino sketch.
+     * It sets the data direction registers (DDRx) for digital pins D2 to D7 and B0 to B3,
+     * configures pin C0 as an input pin, and initializes the Serial communication at 9600 baud rate.
+     *
+     * Pin Configuration:
+     *   - Digital pins D2 to D7 are set as output pins by setting the corresponding bits in DDRD to HIGH (1).
+     *   - Digital pins B0 to B3 are set as output pins by setting the corresponding bits in DDRB to HIGH (1).
+     *
+     * Serial Communication:
+     *   - Serial communication is initiated by calling `Serial.begin(9600)`.
+     *   - The baud rate is set to 9600 bits per second.
+     */
+    void setup() {
+      DDRD |= B11111100;
+      DDRB |= B00001111;
+      pinMode(CELL_OUTPUT, INPUT);
+      pinMode(CV_VOLTAGE, INPUT);
+    
+      // Set pins to 0v
+      PORTD = 0x00;
+      PORTB = 0x00;
+      Serial.begin(9600);
+    }
+    
+    
+    /**
+     * Function: loop
+     * ----------------
+     * The main execution loop for the Arduino sketch.
+     * It waits for the trigger pin to go HIGH and then executes the selected mode based on the MODE variable.
+     * After completing the mode execution, it waits for a specified delay before starting the sequence again.
+     *
+     */
+    void loop() {
+      // Wait for trigger pin to go HIGH
+      while (digitalRead(TRIGGER_PIN) == LOW) {
+      }
+    
+      switch (MODE) {
+        case 0:
+          cvMode();
+          break;
+    
+        default:
+          Serial.print("Incorrect Mode.");
+          break;
+      }
+    
+      // Wait before starting the sequence again
+      delay(1000); // Adjust the delay between repetitions as needed
+    }
+    
+\end{lstlisting}
+
+\newpage\subsubsection*{2}
+\begin{lstlisting}
+# Christopher Hunt
+# serial_2_txt.py
+import serial
+import sys
+
+# Serial port configuration
+serial_port = '/dev/ttyACM0'  # Replace with the appropriate serial port
+baud_rate = 9600
+
+# File path for saving data
+file_path = 'data.txt'
+
+# Open the serial port
+ser = serial.Serial(serial_port, baud_rate)
+
+# Open the file in append mode
+with open(file_path, 'a') as file:
+    try:
+        # Read data from the serial port and write it to the file
+        while True:
+            if ser.in_waiting > 0:
+                data = ser.readline().decode().strip()
+                file.write(data + '\n')
+                file.flush()  # Flush the buffer to ensure immediate writing
+
+    except KeyboardInterrupt:
+        # Handle keyboard interrupt (Ctrl+C)
+        print("Keyboard interrupt detected. Exiting...")
+        ser.close()  # Close the serial port
+        sys.exit(0)
+
+\end{lstlisting}
+
+\newpage
+\subsubsection*{3}
+\begin{lstlisting}
+    # Christopher Hunt
+    # graph.py
+    
+    import matplotlib.pyplot as plt
+    
+    def read_data(file_path):
+        x_values = []
+        y_values = []
+    
+        with open(file_path, 'r') as file:
+            for line in file:
+                data = line.strip().split('\t')
+                if len(data) == 2:
+                    data[0] = (.5/1023)*float(data[0])
+                    data[1] = ((4/1023)*float(data[1]) - 2)/12500*10**6
+                    x_values.append(data[0])
+                    y_values.append(data[1])
+    
+        return x_values, y_values
+    
+    data_file = 'data.txt'  # Update with your file path
+    x, y = read_data(data_file)
+    
+    plt.scatter(x, y)
+    plt.xlabel('V_in')
+    plt.ylabel('I_out')
+    plt.title('Data Plot')
+    plt.grid(True)
+    plt.show()
+\end{lstlisting}
 
 \end{document}
