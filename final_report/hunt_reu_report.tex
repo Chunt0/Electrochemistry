@@ -116,11 +116,15 @@ The Meloni Design is comprised of 7 stages (fig. 2).
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.5\linewidth]{meloni_design.png}
+    \includegraphics[width=.7\linewidth]{meloni_design.png}
     \caption{Meloni Design}
 \end{figure}
 
-The electrochemical reaction to be studied is a ferricyanide/ferrocyanide redox reaction. This reaction will first be conducted using a BioLogic VSP-300 potentiostat using the EC-Lab software. A CV will be produced using a potential window from 0 to 0.5 volts, with scan rates of 20, 50, and 100 mV/s. This benchmark testing will provide an expected current range of the redox reaction. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{pot_design.png}
+    \caption{Meloni Design}
+\end{figure}
 
 There are three design components that are being adjusted from the Meloni Design. First, we changed how the control signal is generated. The Meloni Design uses a single PWM pin from the Arduino in combination with an RC filter and an op-amp in an integrator configuration to produce the control signal for the CV. For our design, we chose to use a 10-bit Digital-Analog Converter (DAC) using an R2R ladder. This offers two benefits: first, it offers greater resolution for the control signal - 10-bit precision instead of 8-bit with the PWM design. Second, the R2R ladder is a fundamental circuit design used in entry-level electrical engineering coursework, whereas the PWM design may be considered more advanced. Second, we chose to swap the connections between the working electrode (WE) and the counter electrode (CE). This design decision was made with consultation from a BioLogic representative who claimed that since we are concerned about the current through the working electrode, it is assumed that measuring the current directly through it is the optimal design solution. Third, we must alter the values of the current to voltage converter. We will use the benchmark testing current maximum and minimum values to calculate the appropriate resistor and capacitor values for this circuit.
 
@@ -133,6 +137,8 @@ Our research, while thorough, encounters certain limitations. The resolution of 
 This research presents a comprehensive methodology to assess, improve, and compare Arduino-based potentiostat designs. While there are some limitations, the study leverages the strengths of existing designs, particularly the Meloni Design, and contributes valuable enhancements to this field. Further studies can build on these findings, optimizing and addressing the identified limitations.
 
 \subsubsection*{Benchmarking: Ferri/Ferrocyanide Redox Reaction Electrochemical Cell Setup}
+
+The electrochemical reaction to be studied is a ferricyanide/ferrocyanide redox reaction. This reaction will first be conducted using a BioLogic VSP-300 potentiostat using the EC-Lab software. A CV will be produced using a potential window from 0 to 0.5 volts, with scan rates of 20, 50, and 100 mV/s. This benchmark testing will provide an expected current range of the redox reaction. 
 
 \subsection*{Results}
 

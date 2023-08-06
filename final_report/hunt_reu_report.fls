@@ -184,6 +184,11 @@ INPUT ./meloni_design.png
 INPUT meloni_design.png
 INPUT ./meloni_design.png
 INPUT ./meloni_design.png
+INPUT ./pot_design.png
+INPUT ./pot_design.png
+INPUT pot_design.png
+INPUT ./pot_design.png
+INPUT ./pot_design.png
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm

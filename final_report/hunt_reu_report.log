@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.6.2)  6 AUG 2023 14:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.6.2)  6 AUG 2023 14:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -311,24 +311,29 @@ Package pdftex.def Info: review.png  used on input line 51.
 File: meloni_design.png Graphic file (type png)
 <use meloni_design.png>
 Package pdftex.def Info: meloni_design.png  used on input line 119.
-(pdftex.def)             Requested size: 242.10493pt x 141.95457pt.
- [5 <./meloni_design.png>] [6]
+(pdftex.def)             Requested size: 338.94543pt x 198.73022pt.
+<pot_design.png, id=23, 1276.77pt x 593.21625pt>
+File: pot_design.png Graphic file (type png)
+<use pot_design.png>
+Package pdftex.def Info: pot_design.png  used on input line 125.
+(pdftex.def)             Requested size: 338.94543pt x 157.48216pt.
+ [5 <./meloni_design.png> <./pot_design.png>] [6] [7]
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <9> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 161.
- [7] [8] [9] [10] [11] [12] (./hunt_reu_report.aux) ) 
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 167.
+ [8] [9] [10] [11] [12] [13] (./hunt_reu_report.aux) ) 
 Here is how much of TeX's memory you used:
- 6435 strings out of 476038
- 90496 string characters out of 5790177
+ 6443 strings out of 476038
+ 90652 string characters out of 5790177
  2356785 words of memory out of 5000000
- 26816 multiletter control sequences out of 15000+600000
+ 26823 multiletter control sequences out of 15000+600000
  520045 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,12n,62p,1386b,1883s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on hunt_reu_report.pdf (12 pages, 981704 bytes).
+Output written on hunt_reu_report.pdf (13 pages, 1025990 bytes).
 PDF statistics:
- 83 PDF objects out of 1000 (max. 8388607)
- 50 compressed objects within 1 object stream
+ 89 PDF objects out of 1000 (max. 8388607)
+ 53 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
