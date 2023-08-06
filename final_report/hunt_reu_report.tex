@@ -26,16 +26,22 @@
 \maketitle
 
 \subsection*{Abstract}
+
+This report presents a comprehensive review and comparative study of four different potentiostat designs: The Meloni Design, CheapStat, PaqariStat, and SimpleStat. Each design was evaluated based on the criteria of design complexity, functional efficacy, and educational accessibility. After careful consideration, the Meloni Design was selected as the foundational blueprint for our project due to its simplicity, functionality, and educational value. Modifications were made to the Meloni Design in an attempt to enhance the precision of the control signal and simplify the implementation of the hardware design. Despite these improvements, persistent issues were encountered with accurately measuring the output current at the working electrode due to signal noise. While the expected current range was -2 mA to 2 mA, our design produced readings that fluctuated between 0.1 mA and 0.4 mA. These findings underscore the challenges and complexities involved in DIY potentiostat design. Future research will focus on addressing these limitations to improve the performance and reliability of our educational potentiostat.
 \subsection*{Introduction}
 Electrochemical research holds immense potential to address challenges in energy sustainability and environmental conservation. This field encompasses work on renewable energy generation, energy storage, and environmental remediation, among others. A cornerstone for propelling advancements in these areas is educating the next generation of engineers and scientists. However, the significant costs associated with essential instrumentation, coupled with a lack of educational resources, present considerable hurdles.
 
 At the heart of electrochemical research lies the potentiostat, an instrument fundamental to a variety of experimental methods. Commercial potentiostats often retail for over a thousand dollars, a price point that restricts educational opportunities and limits the pursuit of electrochemical innovation.
 
-An increasing number of researchers have leveraged the rising accessibility of affordable microcontrollers, like the Arduino Uno, to develop low-cost potentiostats [Cook 2020]. While these economical devices may not yet match the capabilities of their commercial counterparts, they serve as invaluable educational tools. Still a gap exists between the research and the standardization of design for academic use. Literature explored in this review has shown designs all meeting benchmark testing, however, these projects remain difficult to implement in a high school or undergraduate setting. By introducing electrochemical techniques to students and resource-constrained communities, these low-cost potentiostats facilitate learning and stimulate innovation, despite financial limitations.
+An increasing number of researchers have leveraged the rising accessibility of affordable microcontrollers, like the Arduino Uno, to develop low-cost potentiostats [Cook 2020]. While these economical devices may not yet match the capabilities of their commercial counterparts, they serve as invaluable educational tools. Still a gap exists between the research and the standardization of design for academic use. Literature explored in this report has shown designs all meeting benchmark testing, however, these projects remain difficult to implement in a high school or undergraduate setting. By introducing electrochemical techniques to students and resource-constrained communities, these low-cost potentiostats facilitate learning and stimulate innovation, despite financial limitations.
 
 \subsection*{Literature Review}
 Four potentiostat designs were reviewed: The Meloni Design [Meloni 2016], CheapStat [Rowe 2011], PaqariStat [Cordova-Huaman 2021], and SimpleStat [Butterworth 2019]. These designs will be evaluated against specific criteria that align with our ambition to enhance education and outreach in Electrochemical Engineering. These criteria include: design complexity, functional efficacy, and educational accessibility.
-
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{review.png}
+    \caption{Left to Right: Meloni Design, PaqariStat, SimpleStat, CheapStat}
+\end{figure}
 \subsubsection*{Design Complexity}
 Potentiostat design complexity is a critical factor that influences both the user experience and the device's functional range. Among the four studied designs, two design approaches are discernible: the Arduino-based designs (the Meloni design and Paqari Stat) and the Integrated Chip (IC) based designs (Cheapstat and Simplestat). Each design's complexity is influenced by the hardware architecture and software implementation.
 
@@ -71,21 +77,24 @@ Educational accessibility is a key consideration when assessing these potentiost
 
 The Meloni design, with its Arduino-based approach, offers a relatively straightforward design and software implementation. It relies on a commonly used Arduino Uno microcontroller, an 8-bit signal for control, and a three-stage hardware design, all of which are concepts that are relatively easy to grasp for undergraduate students. The depth of explaination of the hardware's design by Meloni makes it the clearest to implement.
 
-Like the Meloni design, Paqari Stat utilizes an Arduino-based approach, making it comparatively more accessible for educational use. The addition of a smartphone app for controlling the potentiostat makes troubleshooting errors between the hardware and software more difficult to fix. This app could also act as a 'black box', obscuring the underlying processes and impeding students from fully understanding the potentiostat's operation. While this design seems as promising as the Meloni design in terms of educational potential, the role of the smartphone app in an educational setting requires further exploration.
+Like the Meloni design, Paqari Stat utilizes an Arduino-based approach, making it comparatively more accessible for educational use. The addition of a smartphone app for controlling the potentiostat makes troubleshooting errors between the hardware and software more difficult to fix. This app could also act as a `black box', obscuring the underlying processes and impeding students from fully understanding the potentiostat's operation. While this design seems as promising as the Meloni design in terms of educational potential, the role of the smartphone app in an educational setting requires further exploration.
 
 The Cheapstat, with its surface mount IC microcontroller and assembly language coding, presents a more challenging approach for undergraduate students. Assembly language, being a low-level language, provides deeper control over hardware but at the cost of complexity and a steep learning curve. Furthermore, the hardware design is not well-documented, which can cause further obstacles to understanding and replicating the design. While Cheapstat might be more appropriate for graduate students or practicing electrochemists who seek a cost-effective field potentiostat, its educational accessibility for undergraduate students seems limited.
 
 Similar to Cheapstat, SimpleStat employs a surface mounted IC microcontroller and assembly language coding. This results in a higher level of opacity in both hardware and software design, which may present significant challenges for undergraduate students with limited programming and hardware experience. Consequently, it appears more suitable for advanced users such as graduate students or professional electrochemists.
 
-In terms of educational accessibility, the Arduino-based potentiostats (Meloni and Paqari Stat) seem more approachable for undergraduate students due to their relative simplicity and familiar software implementation. The additional smartphone interface of the Paqari Stat could be a double-edged sword, simultaneously promoting engagement while potentially limiting understanding of underlying processes. In contrast, the IC-based designs (Cheapstat and Simplestat) present higher complexity, which might pose substantial challenges for students but offer potentially richer learning experiences for more advanced users. Further research, with a focus on user experience in a real educational setting, could provide valuable insights into the educational accessibility of these designs.
+In terms of educational accessibility, the Arduino-based potentiostats (Meloni and Paqari Stat) seem more approachable for undergraduate students due to their relative simplicity and familiar software implementation. The additional smartphone interface of the Paqari Stat could be a double-edged sword, simultaneously promoting engagement while potentially limiting understanding of underlying processes. In contrast, the IC-based designs (Cheapstat and Simplestat) present higher complexity, which might pose substantial challenges for students but offer potentially richer learning experiences for more advanced users.
+
+Balancing these criteria, we found the Meloni Design most effectively met our standards of design simplicity, functional efficacy, and educational accessibility. This led us to select it as the foundational framework for our potentiostat design.
 
 
 \subsection*{Methodology}
-This research undertakes an examination, construction, and testing of various Arduino-based potentiostat designs. After examining several designs, we focused our attention on the Meloni Design due to its detailed circuit layout and ease of replication. We further enhanced this design by incorporating a 10-bit digital-analog converter to achieve a higher resolution control signal. Due to the limitations of this DIY potentiostat, specific component choices and layout may require adjustments to accurately provide data for our use case. The design will be constructed to properly detect the current generated from a Ferricyanide/Ferrocyanide redox reaction during a cyclic voltammetry (CV) experiment, the common benchmark test for the articles examined in our literature review. The methodology section thus elaborates on the research design, data collection, data analysis processes, and the limitations encountered in the study.
 
-A comparative analysis of Arduino-based designs was performed. Arduino microcontrollers are known for their affordability and ease of implementation. From our literature review, it was determined that the hardware design will reflect the design choices made in The Meloni Design. This was chosen based on its detailed schematic and commonality in the potentiostat designs literature. This design, however, may require adjustments to the control signal and several component values to be operable within our research's specific test case.
+In this section, we outline the methods employed in the development and mbenchmarking of our potentiostat design. The aim is to provide a comprehensive understanding of our approach, which involved two key processes. First, we modified the existing Meloni Design and developed an Arduino and Python based software for control and data collection. Second, we implemented a a benchmarking protocol using a Ferri/ferrocyanide redox reaction to evaluate the performance of our design. 
 
-The Meloni Design is comprised of 7 stages (fig. 1).
+\subsubsection*{Hardware and Software Design}
+
+The Meloni Design is comprised of 7 stages (fig. 2).
 \begin{enumerate}
     \item Software-generated Pulse Width Modulated (PWM) control signal
     \item Hardware filtering of control signal
@@ -98,7 +107,7 @@ The Meloni Design is comprised of 7 stages (fig. 1).
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.7\linewidth]{meloni_design.png}
+    \includegraphics[width=.5\linewidth]{meloni_design.png}
     \caption{Meloni Design}
 \end{figure}
 
@@ -115,20 +124,10 @@ Our research, while thorough, encounters certain limitations. The resolution of 
 This research presents a comprehensive methodology to assess, improve, and compare Arduino-based potentiostat designs. While there are some limitations, the study leverages the strengths of existing designs, particularly the Meloni Design, and contributes valuable enhancements to this field. Further studies can build on these findings, optimizing and addressing the identified limitations.
 
 \subsection*{Results}
+
 \subsection*{Discussion}
 \subsection*{Conclusion}
 
-In this literature review, we explored four distinctive low-cost potentiostat designs for educational outreach: The Meloni design, CheapStat, PaqariStat, and SimpleStat. We evaluated them based on their design complexity, functional efficacy, and educational accessibility.
-
-From the perspective of design complexity, the Arduino-based designs (Meloni and Paqari Stat) emerged as user-friendly options due to their modular hardware architectures and high-level software.The IC-based designs (Cheapstat and Simplestat), although more integrated and possibly energy efficient, presented challenges in self-assembly and required more detailed assembly documentation. The Meloni design provided the most detailed explaination for implementation of the four. 
-
-As for functional efficacy, all four designs showcased promising results based on the CV tests. However, given the variation in the level of detail provided and the range of electrochemical experiments, more comprehensive testing and documentation are necessary for a thorough comparison and understanding of their functional capabilities.
-
-In terms of educational accessibility, the Arduino-based designs (Meloni and Paqari Stat) appeared more suited for undergraduate students, whereas IC-based designs (Cheapstat and Simplestat), despite their higher complexity, might offer a richer learning experience for more advanced users.
-
-While this review provides a comprehensive exploration of these four low-cost potentiostat designs, the final selection would inevitably depend on the users' specific needs and the educational environment they will be deployed in. Further hands-on exploration and user experience studies could augment the understanding of these designs' real-world applicability and potential. It is our hope that this review aids in identifying suitable low-cost potentiostat designs for educators and researchers striving to democratize and innovate electrochemical education. We are enthusiastic about the promise that these low-cost designs hold for bridging the gap between electrochemical research and educational outreach.
-
-However, it is clear that more work is needed to standardize these designs for academic use. The community should continue pushing towards producing low-cost, reliable, and accessible potentiostat designs, thereby accelerating learning and innovation in the field of electrochemistry.
 \subsection*{References}
 Butterworth A, Corrigan DK, et al. (2019) Electrochemical detection of oxacillin resistance with SimpleStat: a low cost integrated potentiostat and sensor platform. \emph{Analytical Methods.} Issue 14. 
 
