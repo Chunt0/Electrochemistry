@@ -13,7 +13,7 @@ def parse_data(file_path):
             data = line.strip().split('\t')
             if len(data) == 2:
                 data[0] = (1/2046)*float(data[0])
-                data[1] = (5/(66.3*1023))*float(data[1])
+                data[1] = (5/(660.3*1023))*float(data[1])
                 x_values.append(data[0])
                 y_values.append(data[1])
         x_values = [sum(x_values[i:i+10])/10 for i in range(0, len(x_values), 10)]
