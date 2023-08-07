@@ -99,11 +99,11 @@ Balancing these criteria, we found the Meloni Design most effectively met our st
 
 \subsection*{Methodology}
 
-In this section, we outline the methods employed in the development and mbenchmarking of our potentiostat design. The aim is to provide a comprehensive understanding of our approach, which involved two key processes. First, we modified the existing Meloni Design and developed an Arduino and Python based software for control and data collection. Second, we implemented a a benchmarking protocol using a Ferri/ferrocyanide redox reaction to evaluate the performance of our design. 
+In this section, we outline the methods employed in the development and benchmarking of our potentiostat design. The aim is to provide a comprehensive understanding of our approach, which involved two key processes. First, we modified the existing Meloni Design and developed an Arduino and Python based software for control and data collection. Second, we implemented a a benchmarking protocol using a Ferri/ferrocyanide redox reaction to evaluate the performance of our design. 
 
 \subsubsection*{Potentiostat Design: Hardware and Software Modifications Based on the Meloni Design}
 
-The Meloni Design is comprised of 7 stages (fig. 2).
+The Meloni Design showed excellent benchmark metrics compared to professional potnetiostats while also using an easy to follow beginner friendly design. The Meloni Design is comprised of 7 stages (fig. 2).
 \begin{enumerate}
     \item Software-generated Pulse Width Modulated (PWM) control signal
     \item Hardware filtering of control signal
@@ -116,19 +116,25 @@ The Meloni Design is comprised of 7 stages (fig. 2).
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.7\linewidth]{meloni_design.png}
+    \includegraphics[width=.9\linewidth]{meloni_design.png}
     \caption{Meloni Design}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=.7\linewidth]{pot_design.png}
-    \caption{Meloni Design}
-\end{figure}
 
 There are three design components that are being adjusted from the Meloni Design. First, we changed how the control signal is generated. The Meloni Design uses a single PWM pin from the Arduino in combination with an RC filter and an op-amp in an integrator configuration to produce the control signal for the CV. For our design, we chose to use a 10-bit Digital-Analog Converter (DAC) using an R2R ladder. This offers two benefits: first, it offers greater resolution for the control signal - 10-bit precision instead of 8-bit with the PWM design. Second, the R2R ladder is a fundamental circuit design used in entry-level electrical engineering coursework, whereas the PWM design may be considered more advanced. Second, we chose to swap the connections between the working electrode (WE) and the counter electrode (CE). This design decision was made with consultation from a BioLogic representative who claimed that since we are concerned about the current through the working electrode, it is assumed that measuring the current directly through it is the optimal design solution. Third, we must alter the values of the current to voltage converter. We will use the benchmark testing current maximum and minimum values to calculate the appropriate resistor and capacitor values for this circuit.
 
-The modifications to the original Meloni Design were made in line with theoretical circuit analysis techniques. The use of an R2R ladder and the need for future students to perform circuit analysis to attenuate component values offer a greater learning opportunity for students.
+The modifications to the original Meloni Design were made in line with theoretical circuit analysis techniques. The use of an R2R ladder and the need for future students to perform circuit analysis to attenuate component values offer a greater learning opportunity for students. With this in mind the construction of the potentiostat used in this report can be understood as follows:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.9\linewidth]{pot_design.png}
+    \caption{Our Design}
+\end{figure}
+
+\subsubsection*{Hardware Design}
+For our potentiostat design we are using an Arduino Uno as the main controller of the potentiostat(resource ref). The Arduino Uno will be responsible for outputing the CV control signal and it will be responsible for sensing the potential applied at the test cell and the output voltage to be used to calculate the output current that passes through the working electrode of the test cell. Further data processing will be conducted using serial communication between the Arduino and a computer (see Software Design for greater detail).
+
+The output control signal that will generate the CV begins with the Arduino's digital pins 2-11. These pins are connected to a corresponding 10 bit R2R ladder which acts as the potentiostats DAC. Since the digital output of each pin is 5 volts the possible output of this R2R ladder will range from 0 to 5 volts. In order to get an accurate reading of the potential being applied to the control amplifier, the Arduino will be sensing the voltage at the output of this R2R ladder, which is connected to the Arduino's analog input pin A1.
 
 We are adopting a twofold data collection process. First, we will collect circuit output measurements to validate each stage of the design. This ensures that the hardware is outputing the expected values in each stage of the hardware before conducting any electrochemical experiments. Next, we will perform the ferri/ferrocyanide experiment. The current from the working electrode will be converted to a voltage between 0-5V. The data collected will be transfered to a PC and then processed using python.
 
