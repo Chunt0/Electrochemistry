@@ -2,8 +2,9 @@
 # graph.py
 
 import matplotlib.pyplot as plt
+import argparse
 
-def read_data(file_path):
+def parse_data(file_path):
     x_values = []
     y_values = []
 
@@ -11,17 +12,24 @@ def read_data(file_path):
         for line in file:
             data = line.strip().split('\t')
             if len(data) == 2:
-                data[0] = (.5/1023)*float(data[0])
-                data[1] = ((4/1023)*float(data[1]) - 2)/12500*10**6
+                data[0] = (1/2046)*float(data[0])
+                data[1] = (5/(66.3*1023))*float(data[1])
                 x_values.append(data[0])
                 y_values.append(data[1])
-
+        x_values = [sum(x_values[i:i+10])/10 for i in range(0, len(x_values), 10)]
+        y_values = [sum(y_values[i:i+10])/10 for i in range(0, len(y_values), 10)]
     return x_values, y_values
 
-data_file = 'data.txt'  # Update with your file path
-x, y = read_data(data_file)
+# Add command-line argument parsing
+parser = argparse.ArgumentParser(description='Plot data from a file.')
+parser.add_argument('data_file', type=str, help='Path to the data file.')
+args = parser.parse_args()
 
-plt.scatter(x, y)
+# Use the data file path provided as a command-line argument
+data_file = args.data_file
+x, y = parse_data(data_file)
+
+plt.plot(x, y)
 plt.xlabel('V_in')
 plt.ylabel('I_out')
 plt.title('Data Plot')
