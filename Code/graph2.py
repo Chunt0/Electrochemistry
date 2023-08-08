@@ -12,8 +12,8 @@ def parse_data(file_path):
         for line in file:
             data = line.strip().split('\t')
             if len(data) == 2:
-                data[0] = (5/(10*1023))*float(data[0])
-                data[1] = ((5*1000)/(66.3*1023*100))*float(data[1])
+                data[0] = float(data[0])
+                data[1] = float(data[1])
                 x_values.append(data[0])
                 y_values.append(data[1])
         x_values = [sum(x_values[i:i+5])/5 for i in range(0, len(x_values), 5)]
