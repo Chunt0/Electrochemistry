@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage[margin=.9in]{geometry}
 \usepackage{xcolor}
+\usepackage{subcaption}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{float}
@@ -159,11 +160,55 @@ The Python script facilitates real-time data acquisition via the Arduino's USB s
 
 The electrochemical reaction to be studied is a ferricyanide/ferrocyanide redox reaction. This reaction will first be conducted using a BioLogic VSP-300 potentiostat using the EC-Lab software. A CV will be produced using a potential window from 0 to 0.5 volts, with scan rates of 20, 50, and 100 mV/s. This benchmark testing will provide an expected current range of the redox reaction. 
 
+For the complete parts list, experimental procedure and lab companion see the Supplemental Material section.
+
 \subsection*{Results}
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{FECN_20mVs_5cycles_lab.png}
+    \caption{BioLogic VSP-300 FeCN 20 mV/s 5 cycles}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{FECN_20mVs_5cycles.png}
+    \caption{DIY Potentiostat FeCN 20 mV/s 5 cycles}
+  \end{subfigure}
+  \caption{Side-by-side images}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{FECN_50mVs_5cycles_lab.png}
+    \caption{BioLogic VSP-300 FeCN 50 mV/s 5 cycles}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{FECN_50mVs_5cycles.png}
+    \caption{DIY Potentiostat FeCN 50 mV/s 5 cycles}
+  \end{subfigure}
+  \caption{Side-by-side images}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{FECN_100mVs_5cycles_lab.png}
+    \caption{BioLogic VSP-300 FeCN 100 mV/s 5 cycles}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{FECN_100mVs_5cycles.png}
+    \caption{DIY Potentiostat FeCN 100 mV/s 5 cycles}
+    \caption{Caption for Image 2}
+  \end{subfigure}
+  \caption{Side-by-side images}
+\end{figure}
 
 \subsection*{Discussion}
 \subsection*{Conclusion}
-
+\subsection*{Acknowledgements}
 \subsection*{References}
 Butterworth A, Corrigan DK, et al. (2019) Electrochemical detection of oxacillin resistance with SimpleStat: a low cost integrated potentiostat and sensor platform. \emph{Analytical Methods.} Issue 14. 
 
@@ -174,6 +219,9 @@ Cordova-Huaman AV, Jauja-Ccana VR, et al. (2021) Low-cost smartphone-controlled 
 Meloni, GN (2016). Building a Microcontroller Based Potentiostat: A Inexpensive and Versatile Platform for Teaching Electrochemistry and Instrumentation. \emph{Journal of Chemical Education} 93(7), 1320-1322. 
 
 Rowe AA, Bonham AJ, et al. (2011) CheapStat: An Open-Source, ‘‘Do-It-Yourself’’ Potentiostat for Analytical and Educational Applications. \emph{PLoS ONE} 6(9).
+
+\newpage
+\section*{Supplemental Material}
 
 \newpage
 \section*{Appendix}
