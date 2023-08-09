@@ -37,16 +37,17 @@
 
 \subsection*{Abstract}
 
-This report presents a comprehensive review and comparative study of four different potentiostat designs: The Meloni Design, CheapStat, PaqariStat, and SimpleStat. Each design was evaluated based on the criteria of design complexity, functional efficacy, and educational accessibility. After careful consideration, the Meloni Design was selected as the foundational blueprint for our project due to its simplicity, functionality, and educational value. Modifications were made to the Meloni Design in an attempt to enhance the precision of the control signal and simplify the implementation of the hardware design. Despite these improvements, persistent issues were encountered with accurately measuring the output current at the working electrode due to signal noise. While the expected current range was -2 mA to 2 mA, our design produced readings that fluctuated between 0.1 mA and 0.4 mA. These findings underscore the challenges and complexities involved in DIY potentiostat design. Future research will focus on addressing these limitations to improve the performance and reliability of our educational potentiostat.
+This report presents a comprehensive review and comparative study of four different potentiostat designs: The Meloni Design, CheapStat, PaqariStat, and SimpleStat. Each design was evaluated based on the criteria of design complexity, functional efficacy, and educational accessibility. After careful consideration, the Meloni Design was selected as the foundational blueprint for our project due to its simplicity, functionality, and educational value. Modifications were made to the Meloni Design in an attempt to enhance the precision of the control signal and simplify the implementation of the hardware design. Despite these improvements, persistent issues were encountered with accurately measuring the output current at the working electrode due to signal noise. While the expected current range was approximately between -2.5 mA to 2.5 mA, our design produced readings that fluctuated between 0 mA and 0.6 mA. These findings underscore the challenges and complexities involved in DIY potentiostat design. Future research will focus on addressing these limitations to improve the performance and reliability of our educational potentiostat.
+
 \subsection*{Introduction}
 Electrochemical research holds immense potential to address challenges in energy sustainability and environmental conservation. This field encompasses work on renewable energy generation, energy storage, and environmental remediation, among others. A cornerstone for propelling advancements in these areas is educating the next generation of engineers and scientists. However, the significant costs associated with essential instrumentation, coupled with a lack of educational resources, present considerable hurdles.
 
-At the heart of electrochemical research lies the potentiostat, an instrument fundamental to a variety of experimental methods. Commercial potentiostats often retail for over a thousand dollars, a price point that restricts educational opportunities and limits the pursuit of electrochemical innovation.
+At the heart of electrochemical research lies the potentiostat; an instrument fundamental to a variety of experimental methods. Commercial potentiostats often retail for over a thousand dollars, which is a price point that restricts educational opportunities and limits the pursuit of electrochemical innovation.
 
 An increasing number of researchers have leveraged the rising accessibility of affordable microcontrollers, like the Arduino Uno, to develop low-cost potentiostats [Cook 2020]. While these economical devices may not yet match the capabilities of their commercial counterparts, they serve as invaluable educational tools. Still a gap exists between the research and the standardization of design for academic use. Literature explored in this report has shown designs all meeting benchmark testing, however, these projects remain difficult to implement in a high school or undergraduate setting. By introducing electrochemical techniques to students and resource-constrained communities, these low-cost potentiostats facilitate learning and stimulate innovation, despite financial limitations.
 
 \subsection*{Literature Review}
-Four potentiostat designs were reviewed: The Meloni Design [Meloni 2016], CheapStat [Rowe 2011], PaqariStat [Cordova-Huaman 2021], and SimpleStat [Butterworth 2019]. These designs will be evaluated against specific criteria that align with our ambition to enhance education and outreach in Electrochemical Engineering. These criteria include: design complexity, functional efficacy, and educational accessibility.
+Four potentiostat designs were reviewed: The Meloni Design [Meloni 2016], CheapStat [Rowe 2011], PaqariStat [Cordova-Huaman 2021], and SimpleStat [Butterworth 2019]. These designs will be evaluated against specific criteria that align with our ambition to enhance education and outreach in electrochemical engineering. These criteria include: design complexity, functional efficacy, and educational accessibility.
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{review.png}
@@ -128,7 +129,7 @@ The modifications to the original Meloni Design were made in line with theoretic
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.9\linewidth]{pot_design.png}
+    \includegraphics[width=.9\linewidth]{diy_design.png}
     \caption{Our Design}
 \end{figure}
 
@@ -137,7 +138,7 @@ For our potentiostat design we are using an Arduino Uno as the main controller o
 
 The output control signal that will generate the CV begins with the Arduino's digital pins 2-11. These pins are connected to a corresponding 10 bit R2R ladder which acts as the potentiostats DAC. Since the digital output of each pin is 5 volts the possible output of this R2R ladder will range from 0 to 5 volts. In order to get an accurate reading of the potential being applied to the control amplifier, the Arduino will be sensing the voltage at the output of this R2R ladder, which is connected to the Arduino's analog input pin A1.
 
-The next stage we will process the signal to fit within the desired potential range. For our experiment we are using a CV potential range from 0v to 0.5v. This can be achieved using a voltage divider to scale the control signal by one tenth. It should be noted that this value can be adjusted to fit other potential ranges depending on the needs of future researchers. This scaled signal is then fed to the non inverting input terminal of the control amplifier. 
+The next stage we will process the signal to fit within the desired potential range. For our experiment we are using a CV potential range from 0v to 0.5v. This can be achieved using a voltage divider to scale the control signal by one tenth. It should be noted that this value can be adjusted to fit other potential ranges depending on the needs of future researchers. This scaled signal is then fed to the non-inverting input terminal of the control amplifier. 
 
 The output of the control amplifier is connected to the CE of the test cell, while the reference electrode (RE) is connected to the inverting input of the control amplifier. The control amplifier is the heart of the potentiostat. This element is what ensures that the voltage at the RE follows the control signal. The WE is then connected to a measurement resistor which is then connected to ground. 
 
@@ -158,11 +159,12 @@ The Python script facilitates real-time data acquisition via the Arduino's USB s
 
 \subsubsection*{Benchmarking: Ferri/Ferrocyanide Redox Reaction Electrochemical Cell Setup}
 
-The electrochemical reaction to be studied is a ferricyanide/ferrocyanide redox reaction. This reaction will first be conducted using a BioLogic VSP-300 potentiostat using the EC-Lab software. A CV will be produced using a potential window from 0 to 0.5 volts, with scan rates of 20, 50, and 100 mV/s. This benchmark testing will provide an expected current range of the redox reaction. 
+The electrochemical reaction to be studied is a ferricyanide/ferrocyanide redox reaction. This reaction will first be conducted using a BioLogic VSP-300 potentiostat using the EC-Lab software. A CV will be produced using a potential window from 0 to 0.5 volts, with scan rates of 20, 50, and 100 mV/s for 5 cycles each. This benchmark testing will provide an expected current range of the redox reaction. 
 
 For the complete parts list, experimental procedure and lab companion see the Supplemental Material section.
 
 \subsection*{Results}
+With our potentiostat built, it was then tested against a BioLogic VSP-300 potentiostat using the Ferri/ferrocyanide redox reaction. During the course of our testing the measured current response from the working electrode revealed several insights. First, when performing CV at scan rates of 20 mV/s, 50 mV/s, and 100 mV/s, distinct patterns emerged between the applied voltage and the observerd current through the WE. The measured current displayed a discernible trend, fluctuating within the ranges of 0 to 0.4 volts, 0 to 0.5 volts, and 0 to 0.6 volts for the respective scan rates (Figure 4).  Despite the consistency observed in the current response, a disparity emerged in comparison to the BioLogic potentiostat's measurements. The absence of the expected `duck shaped' cyclic voltammogram in our recorded data points to errors within the potentiostat design.
 \begin{figure}[H]
   \centering
   \begin{subfigure}[b]{0.45\textwidth}
@@ -174,11 +176,7 @@ For the complete parts list, experimental procedure and lab companion see the Su
     \includegraphics[width=\textwidth]{FECN_20mVs_5cycles.png}
     \caption{DIY Potentiostat FeCN 20 mV/s 5 cycles}
   \end{subfigure}
-  \caption{Side-by-side images}
-\end{figure}
 
-\begin{figure}[H]
-  \centering
   \begin{subfigure}[b]{0.45\textwidth}
     \includegraphics[width=\textwidth]{FECN_50mVs_5cycles_lab.png}
     \caption{BioLogic VSP-300 FeCN 50 mV/s 5 cycles}
@@ -188,11 +186,7 @@ For the complete parts list, experimental procedure and lab companion see the Su
     \includegraphics[width=\textwidth]{FECN_50mVs_5cycles.png}
     \caption{DIY Potentiostat FeCN 50 mV/s 5 cycles}
   \end{subfigure}
-  \caption{Side-by-side images}
-\end{figure}
 
-\begin{figure}[H]
-  \centering
   \begin{subfigure}[b]{0.45\textwidth}
     \includegraphics[width=\textwidth]{FECN_100mVs_5cycles_lab.png}
     \caption{BioLogic VSP-300 FeCN 100 mV/s 5 cycles}
@@ -201,9 +195,9 @@ For the complete parts list, experimental procedure and lab companion see the Su
   \begin{subfigure}[b]{0.45\textwidth}
     \includegraphics[width=\textwidth]{FECN_100mVs_5cycles.png}
     \caption{DIY Potentiostat FeCN 100 mV/s 5 cycles}
-    \caption{Caption for Image 2}
   \end{subfigure}
-  \caption{Side-by-side images}
+  
+  \caption{Side-by-side comparison of cyclic voltammograms}
 \end{figure}
 
 \subsection*{Discussion}
