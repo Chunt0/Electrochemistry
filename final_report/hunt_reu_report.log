@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.6.2)  9 AUG 2023 16:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.6.2)  11 AUG 2023 15:38
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -345,51 +345,51 @@ File: diy_design.png Graphic file (type png)
 <use diy_design.png>
 Package pdftex.def Info: diy_design.png  used on input line 132.
 (pdftex.def)             Requested size: 435.78593pt x 194.97018pt.
- [6 <./diy_design.png>]
-<FECN_20mVs_5cycles_lab.png, id=32, 462.528pt x 346.896pt>
+ [6 <./diy_design.png>] [7]
+<FECN_20mVs_5cycles_lab.png, id=37, 462.528pt x 346.896pt>
 File: FECN_20mVs_5cycles_lab.png Graphic file (type png)
 <use FECN_20mVs_5cycles_lab.png>
-Package pdftex.def Info: FECN_20mVs_5cycles_lab.png  used on input line 171.
+Package pdftex.def Info: FECN_20mVs_5cycles_lab.png  used on input line 193.
 (pdftex.def)             Requested size: 217.89296pt x 163.42224pt.
-<FECN_20mVs_5cycles.png, id=33, 462.528pt x 346.896pt>
+<FECN_20mVs_5cycles.png, id=38, 462.528pt x 346.896pt>
 File: FECN_20mVs_5cycles.png Graphic file (type png)
 <use FECN_20mVs_5cycles.png>
-Package pdftex.def Info: FECN_20mVs_5cycles.png  used on input line 176.
+Package pdftex.def Info: FECN_20mVs_5cycles.png  used on input line 198.
 (pdftex.def)             Requested size: 217.89296pt x 163.42224pt.
-<FECN_50mVs_5cycles_lab.png, id=34, 462.528pt x 346.896pt>
+<FECN_50mVs_5cycles_lab.png, id=39, 462.528pt x 346.896pt>
 File: FECN_50mVs_5cycles_lab.png Graphic file (type png)
 <use FECN_50mVs_5cycles_lab.png>
-Package pdftex.def Info: FECN_50mVs_5cycles_lab.png  used on input line 181.
+Package pdftex.def Info: FECN_50mVs_5cycles_lab.png  used on input line 203.
 (pdftex.def)             Requested size: 217.89296pt x 163.42224pt.
-<FECN_50mVs_5cycles.png, id=35, 462.528pt x 346.896pt>
+<FECN_50mVs_5cycles.png, id=40, 462.528pt x 346.896pt>
 File: FECN_50mVs_5cycles.png Graphic file (type png)
 <use FECN_50mVs_5cycles.png>
-Package pdftex.def Info: FECN_50mVs_5cycles.png  used on input line 186.
+Package pdftex.def Info: FECN_50mVs_5cycles.png  used on input line 208.
 (pdftex.def)             Requested size: 217.89296pt x 163.42224pt.
-<FECN_100mVs_5cycles_lab.png, id=36, 462.528pt x 346.896pt>
+<FECN_100mVs_5cycles_lab.png, id=41, 462.528pt x 346.896pt>
 File: FECN_100mVs_5cycles_lab.png Graphic file (type png)
 <use FECN_100mVs_5cycles_lab.png>
-Package pdftex.def Info: FECN_100mVs_5cycles_lab.png  used on input line 191.
+Package pdftex.def Info: FECN_100mVs_5cycles_lab.png  used on input line 213.
 (pdftex.def)             Requested size: 217.89296pt x 163.42224pt.
-<FECN_100mVs_5cycles.png, id=37, 462.528pt x 346.896pt>
+<FECN_100mVs_5cycles.png, id=42, 462.528pt x 346.896pt>
 File: FECN_100mVs_5cycles.png Graphic file (type png)
 <use FECN_100mVs_5cycles.png>
-Package pdftex.def Info: FECN_100mVs_5cycles.png  used on input line 196.
+Package pdftex.def Info: FECN_100mVs_5cycles.png  used on input line 218.
 (pdftex.def)             Requested size: 217.89296pt x 163.42224pt.
- [7] [8 <./FECN_20mVs_5cycles_lab.png> <./FECN_20mVs_5cycles.png> <./FECN_50mVs_5cycles_lab.png> <./FECN_50mVs_5cycles.png> <./FECN_100mVs_5cycles_lab.png> <./FECN_100mVs_5cycles.png>] [9] [10]
+ [8] [9 <./FECN_20mVs_5cycles_lab.png> <./FECN_20mVs_5cycles.png> <./FECN_50mVs_5cycles_lab.png> <./FECN_50mVs_5cycles.png> <./FECN_100mVs_5cycles_lab.png> <./FECN_100mVs_5cycles.png>] [10] [11]
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <9> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 228.
- [11] [12] [13] [14] [15] [16] (./hunt_reu_report.aux) ) 
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 263.
+ [12] [13] [14] [15] [16] (./hunt_reu_report.aux) ) 
 Here is how much of TeX's memory you used:
- 7944 strings out of 476038
- 120401 string characters out of 5790177
- 2356785 words of memory out of 5000000
- 28308 multiletter control sequences out of 15000+600000
+ 7941 strings out of 476038
+ 120366 string characters out of 5790177
+ 2359785 words of memory out of 5000000
+ 28305 multiletter control sequences out of 15000+600000
  520213 words of font info for 62 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 67i,12n,77p,1484b,1886s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 67i,12n,77p,1487b,1886s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on hunt_reu_report.pdf (16 pages, 1284696 bytes).
+Output written on hunt_reu_report.pdf (16 pages, 1290264 bytes).
 PDF statistics:
  120 PDF objects out of 1000 (max. 8388607)
  65 compressed objects within 1 object stream

@@ -37,7 +37,7 @@
 
 \subsection*{Abstract}
 
-This report presents a comprehensive review and comparative study of four different potentiostat designs: The Meloni Design, CheapStat, PaqariStat, and SimpleStat. Each design was evaluated based on the criteria of design complexity, functional efficacy, and educational accessibility. After careful consideration, the Meloni Design was selected as the foundational blueprint for our project due to its simplicity, functionality, and educational value. Modifications were made to the Meloni Design in an attempt to enhance the precision of the control signal and simplify the implementation of the hardware design. Despite these improvements, persistent issues were encountered with accurately measuring the output current at the working electrode due to signal noise. While the expected current range was approximately between -2.5 mA to 2.5 mA, our design produced readings that fluctuated between 0 mA and 0.6 mA. These findings underscore the challenges and complexities involved in DIY potentiostat design. Future research will focus on addressing these limitations to improve the performance and reliability of our educational potentiostat.
+This report presents a comprehensive review and comparative study of four different potentiostat designs: The Meloni Design, CheapStat, PaqariStat, and SimpleStat. Each design was evaluated based on the criteria of design complexity, functional efficacy, and educational accessibility. After careful consideration, the Meloni Design was selected as the foundational blueprint for our project due to its simplicity, functionality, and educational value. Modifications were made to the Meloni Design in an attempt to enhance the precision of the control signal and simplify the implementation of the hardware design. Despite these improvements, persistent issues were encountered with accurately measuring the output current at the working electrode. While the expected current range was approximately between -2.5 mA to 2.5 mA, our design produced readings that fluctuated between 0 mA and 0.6 mA. These findings underscore the challenges and complexities involved in DIY potentiostat design. Future research will focus on addressing these limitations to improve the performance and reliability of our educational potentiostat.
 
 \subsection*{Introduction}
 Electrochemical research holds immense potential to address challenges in energy sustainability and environmental conservation. This field encompasses work on renewable energy generation, energy storage, and environmental remediation, among others. A cornerstone for propelling advancements in these areas is educating the next generation of engineers and scientists. However, the significant costs associated with essential instrumentation, coupled with a lack of educational resources, present considerable hurdles.
@@ -123,18 +123,18 @@ The Meloni Design showed excellent benchmark metrics compared to professional po
 \end{figure}
 
 
-There are three design components that are being adjusted from the Meloni Design. First, we changed how the control signal is generated. The Meloni Design uses a single PWM pin from the Arduino in combination with an RC filter and an op-amp in an integrator configuration to produce the control signal for the CV. For our design, we chose to use a 10-bit Digital-Analog Converter (DAC) using an R2R ladder. This offers two benefits: first, it offers greater resolution for the control signal - 10-bit precision instead of 8-bit with the PWM design. The R2R ladder is a fundamental circuit design used in entry-level electrical engineering coursework, whereas the PWM design may be considered more advanced. Second, we chose to swap the connections between the working electrode (WE) and the counter electrode (CE). This design decision was made with consultation from a BioLogic representative who claimed that since we are concerned about the current through the working electrode, it is assumed that measuring the current directly through it is the optimal design solution. Third, we will change the method used for current to voltage conversion. We will use the benchmark testing current maximum and minimum values to calculate an appropriate current measuring resistor and this voltage will buffered, amplified, and then buffered again before being sent to the Arduino for further processing.
+There are three design components that are being adjusted from the Meloni Design. First, we changed how the control signal is generated. The Meloni Design uses a single PWM pin from the Arduino in combination with an RC filter and an op-amp in an integrator configuration to produce the control signal for the CV. For our design, we chose to use a 10-bit Digital-Analog Converter (DAC) using an R2R ladder. This offers two benefits: first, it offers greater resolution for the control signal - 10-bit precision instead of 8-bit with the PWM design. The R2R ladder is a fundamental circuit design used in entry-level electrical engineering coursework, whereas the PWM design may be considered more advanced. Second, we chose to swap the connections between the working electrode (WE) and the counter electrode (CE). This design decision was made with consultation from a BioLogic representative who claimed that since we are concerned about the current through the working electrode, it is assumed that measuring the current directly through it is the optimal design solution. Third, we will change the method used for current to voltage conversion. We will use the benchmark testing current maximum and minimum values to calculate an appropriate current measuring resistor and this voltage will be buffered, amplified, and then buffered again before being sent to the Arduino for further processing.
 
-The modifications to the original Meloni Design were made in line with theoretical circuit analysis techniques. The use of an R2R ladder and the need for future students to perform circuit analysis to attenuate component values offer a greater learning opportunity for students. With this in mind the construction of the potentiostat used in this report can be understood as follows:
+The modifications to the original Meloni Design were made in line with theoretical circuit analysis techniques. The use of an R2R ladder and the need for future students to perform circuit analysis to attenuate component values offer a greater learning opportunity for students. With this in mind the construction of the potentiostat used in this report can be understood as follows (fig. 3).
 
-\begin{figure}[H]
+\begin{figure}[h]
     \centering
     \includegraphics[width=.9\linewidth]{diy_design.png}
     \caption{Our Design}
 \end{figure}
 
 \subsubsection*{Hardware Design}
-For our potentiostat design we are using an Arduino Uno as the main controller of the potentiostat(resource ref). The Arduino Uno will be responsible for outputing the CV control signal and it will be responsible for sensing the potential applied at the test cell and the output voltage to be used to calculate the output current that passes through the working electrode of the test cell. Further data processing will be conducted using serial communication between the Arduino and a computer (see Software Design for greater detail).
+For our potentiostat design we are using an Arduino Uno as the main controller of the potentiostat. The Arduino Uno will be responsible for outputing the CV control signal and it will be responsible for sensing the potential applied at the test cell and the output voltage to be used to calculate the output current that passes through the working electrode of the test cell. Further data processing will be conducted using serial communication between the Arduino and a computer (see Software Design for greater detail).
 
 The output control signal that will generate the CV begins with the Arduino's digital pins 2-11. These pins are connected to a corresponding 10 bit R2R ladder which acts as the potentiostats DAC. Since the digital output of each pin is 5 volts the possible output of this R2R ladder will range from 0 to 5 volts. In order to get an accurate reading of the potential being applied to the control amplifier, the Arduino will be sensing the voltage at the output of this R2R ladder, which is connected to the Arduino's analog input pin A1.
 
@@ -142,7 +142,7 @@ The next stage we will process the signal to fit within the desired potential ra
 
 The output of the control amplifier is connected to the CE of the test cell, while the reference electrode (RE) is connected to the inverting input of the control amplifier. The control amplifier is the heart of the potentiostat. This element is what ensures that the voltage at the RE follows the control signal. The WE is then connected to a measurement resistor which is then connected to ground. 
 
-This voltage is then scaled to fit within the Arduino's 0 to 5 volt sensing range. It is important to note that the scaling function and component values may need to be adjusted depending on the voltage that is detected across the measurement resistor. It is crucial that the signal can fit well within this range, if not the signal will become clipped and experimental data will be lost.
+This voltage is then scaled to fit within the Arduino's 0 to 5 volt sensing range. It is important to note that the scaling function and component values may need to be adjusted depending on the voltage that is detected across the measurement resistor. It is crucial that the signal can fit well within this range, if not, then the signal will become clipped and experimental data will be lost.
 
 For our experiment we expect a current within the bounds of -2mA to 2mA. This will then be amplified using an op amp in an inverting amplifier configuration and then the signal will be inverted again and biased to fit within the 0 to 5 volt range of the Arduino sensing range. We will see in the results that this configuration will be adjusted due to errors in the experimental set up.
 
@@ -150,11 +150,16 @@ In addition to the potentiostat circuit, there is also a push button that is use
 
 \subsubsection*{Software Design}
 
-The software design has two core components: the CV function and data processing. The CV function has two components, the C++ Arduino code and a python script to capture serial transmission data from the Arduino. The data processing step will take the recorded data, process it and output the CV graph and data.
+The software design has two core components: the CV function and data processing. The CV function is comprised of two parts, the C++ Arduino code and a python script to capture serial transmission data from the Arduino. The data processing step will take the recorded data, process it and output the CV graph and data.
 
-The Arduino code presents a functional potentiostat software tailored for conducting CV measurements. The sketch operates in a loop, waiting for a trigger signal to activate the CV mode. Within the CV mode, the \texttt{cvMode} function controls the voltage output to the potentiostat based on elapsed time and a specified scan rate, generating the desired waveform. The function employs a while loop to execute a series of CV cycles until the desired cycle count is reached. During each cycle, the sketch reads voltage output from the potentiostat and the electrochemical cell's response using analog-to-digital converters. Real-time data is printed to the Serial Monitor, allowing researchers to monitor the CV operation. The sketch can be extended for other electrochemical studies, offering a versatile tool for exploring redox behavior in materials.
+The Arduino code presents a functional potentiostat software tailored for conducting CV measurements. The sketch operates in a loop, waiting for a trigger signal to activate the CV mode. Within the CV mode, the \texttt{cvMode} function controls the voltage output to the potentiostat based on elapsed time and a specified scan rate, generating the desired waveform. The function employs a while loop to execute a series of CV cycles until the desired cycle count is reached. During each cycle, the sketch reads voltage output from the potentiostat and the electrochemical cell's response using analog-to-digital converters. Real-time data is printed to the Serial Monitor, allowing researchers to monitor the CV operation. The sketch can be extended for other electrochemical studies, offering a versatile tool for exploring redox behavior in materials. (See Appendix 1 for source code)
 
-The Python script facilitates real-time data acquisition via the Arduino's USB serial connection. Upon establishing the serial port configuration, the script enters a continuous loop to read data from the potentiostat. The acquired data is written to a text file enabling the accumulation of results. The script is designed to run indefinitely until interrupted by a keyboard interrupt. This script provides a convenient means of acquiring and saving data.
+The Python script facilitates real-time data acquisition via the Arduino's USB serial connection. Upon establishing the serial port configuration, the script enters a continuous loop to read data from the potentiostat. The acquired data is written to a text file enabling the accumulation of results. The script is designed to run indefinitely until interrupted by a keyboard interrupt. This script provides a convenient means of acquiring and saving data. (See Appendix 2 for source code)
+
+Finally, there is the data processing software. This is comprised of a Python script which takes the collected data from a text file. It first parses the text file and then performs a conversion of the data to conform to the values we are looking to measure. This data is then outputed to a text file and the CV graph itself. The process of converting the sensor data into their corresponding values for either potential or current rely heavily on the researchers hardware design choices. The analog input sensors on the Arduino Uno detect voltage values from 0 to 5 volts and converts the analog signal to a digital signal with 10-bit precision. This means that for both measurements we must convert a value between 0 - 1023 to fit either potential (for the input signal) or current (for the output signal). 
+
+For our experiment the input voltage must be converted from steps (0 - 1023) to volts (0 - 0.5) and the output current must be convert from steps (0 - 1023) to volts (0 v - 5 v) and then to current (-2.5 mA - 2.5 mA). To tackle the input voltage we will take the value in steps, multiply by 5 and divide by 1023, to covnert from steps to volts. Then divide again by 10 to account for the voltage divider in our circuit. To convert the sensor data from steps to current requires a little more work. Due to the errors in current measurements that will be discussed later in this report we had to shift the design to accomodate that limited current range. The process of converting the current is as follows - divide by 1023 and multiply by 5 to convert from steps to voltage. Then divide by 69.3 (the amplification factor used to boost the signal in the hardaware design). This will give us the voltage across the measurement resistor, to get current we will divide by 100, the value of the measurement resistor. This will then be converted to milliamps by multiplying by 1000. (see Appendix 3 for source code) 
+
 
 
 \subsubsection*{Benchmarking: Ferri/Ferrocyanide Redox Reaction Electrochemical Cell Setup}
@@ -163,8 +168,25 @@ The electrochemical reaction to be studied is a ferricyanide/ferrocyanide redox 
 
 For the complete parts list, experimental procedure and lab companion see the Supplemental Material section.
 
-\subsection*{Results}
-With our potentiostat built, it was then tested against a BioLogic VSP-300 potentiostat using the Ferri/ferrocyanide redox reaction. During the course of our testing the measured current response from the working electrode revealed several insights. First, when performing CV at scan rates of 20 mV/s, 50 mV/s, and 100 mV/s, distinct patterns emerged between the applied voltage and the observerd current through the WE. The measured current displayed a discernible trend, fluctuating within the ranges of 0 to 0.4 volts, 0 to 0.5 volts, and 0 to 0.6 volts for the respective scan rates (Figure 4).  Despite the consistency observed in the current response, a disparity emerged in comparison to the BioLogic potentiostat's measurements. The absence of the expected `duck shaped' cyclic voltammogram in our recorded data points to errors within the potentiostat design.
+\subsection*{Results and Discussion}
+During testing of our custom-built potentiostat against a BioLogic VSP-300 potentiostat, the measured current response from the working electrode displayed discernible trends. The current fluctuated within the ranges of 0 to 0.4 volts, 0 to 0.5 volts, and 0 to 0.6 volts for scan rates of 20 mV/s, 50 mV/s, and 100 mV/s, respectively (Figure 4). However, a notable disparity emerged when compared to the BioLogic potentiostat's measurements, with the absence of the expected `duck shaped' cyclic voltammogram.
+
+The consistency observed in the current response, despite the disparity with the expected cyclic voltammogram, reveals complex dynamics within the potentiostat's function. The discrepancy may point to a limitation or error in the potentiostat design itself. Several factors might have contributed to these unexpected results.
+
+Extensive hardware troubleshooting was conducted. Each signal processing step within the hardware was tested using signals in the expected range of the electrochemical cell. In isolated testing scenarios, the hardware produced the expected values. The success in isolated hardware testing adds complexity to the observed limitation in the current range when connected to the actual electrochemical cell. The divergence between the isolated testing and real-world application highlights a critical area of investigation.
+
+Though the hardware was designed according to specifications, the observed limitations may stem from several potential sources.
+\begin{enumerate}
+    \item \textbf{Poor Hardware Design}: The entire architecture might not have been optimal for the specific application, leading to inherent limitations.
+    \item \textbf{Component or Breadboard Issues}: The use of specific components or the breadboard itself might have introduced unexpected behaviors or constraints.
+    \item \textbf{Choice of Operational Amplifier}: The chosen operational amplifier for the design may not have been suitable as the control amplifier. This could result in inadequate current driving within the cell, thereby causing the observed limitation.
+\end{enumerate}
+
+The multifaceted nature of the potential errors presents a challenge in pinpointing the exact cause. Further detailed analysis and redesign may be required to isolate and rectify the underlying issues. The findings from this study provide valuable insights into the complexities of custom potentiostat design. While the observed trends and successful isolated testing demonstrate a degree of functionality, the disparity with expected results points to critical areas for improvement.
+
+Further investigation into the specific components, hardware design, and choice of operational amplifier is warranted. Future work should focus on systematically evaluating each potential source of error, leading to refined designs and potentially unveiling novel insights into potentiostat function.
+
+
 \begin{figure}[H]
   \centering
   \begin{subfigure}[b]{0.45\textwidth}
@@ -200,9 +222,22 @@ With our potentiostat built, it was then tested against a BioLogic VSP-300 poten
   \caption{Side-by-side comparison of cyclic voltammograms}
 \end{figure}
 
-\subsection*{Discussion}
+Despite existing errors in our DIY potentiostat design, this research highlights potential success. With further time and assistance from electrical engineering professionals, achieving a DIY design that rivals lab-grade instruments may be possible.
+
 \subsection*{Conclusion}
-\subsection*{Acknowledgements}
+The goal of this project was to synthesize existing research on low cost potentiostat designs and to attempt to develop a comprehensive educational guide for students to pursue electrochemical engineering research. Although the finished product of our design did not adequately meet the benchmarking required to replace lab grade instruments, there was a wealth of educational benefits that were gained through this process. 
+
+
+\subsection*{Acknowledgments}
+
+We express our heartfelt gratitude to Intel for providing the funding to Oregon State University (OSU) for this research internship. Their generous support has been pivotal in enabling this work.
+
+Special thanks to Dr. Kelsey Stoerzinger, who not only served as the main professor and mentor but also facilitated access to her lab where the research was conducted. Her guidance, expertise, and encouragement have been invaluable to the success of this project.
+
+We are also deeply indebted to Dr. Stoerzinger's graduate and post-doctoral students: Sri Krishna Murthy Padavala, Jorin Dawidowicz, Kelly White, Molly Vitale-Sullivan, and Rajkumar Jana. Their support, hands-on assistance, and insightful feedback have greatly enriched this work.
+
+Lastly, we acknowledge the entire team at OSU and all those who contributed directly or indirectly to this research, for creating an environment conducive to innovation and discovery.
+
 \subsection*{References}
 Butterworth A, Corrigan DK, et al. (2019) Electrochemical detection of oxacillin resistance with SimpleStat: a low cost integrated potentiostat and sensor platform. \emph{Analytical Methods.} Issue 14. 
 
@@ -221,177 +256,153 @@ Rowe AA, Bonham AJ, et al. (2011) CheapStat: An Open-Source, ‘‘Do-It-Yoursel
 \section*{Appendix}
 \subsubsection*{1}
 \begin{lstlisting}
-    // Christopher Hunt
-    // potentiostat.ino
-    
-    // User Set Init Params
-    const int CELL_OUTPUT = A0; // Analog Read pin to read electrochemical cell output. Reads voltage data from TIA in circuit.
-    const int CV_VOLTAGE = A1; // Reads current voltage being supplied to the potentiostat.
-    const uint8_t TRIGGER_PIN = 13; // Trigger pin. Detecting push button to trigger the CV.
-    const int MODE = 0; // Mode 0 is CV. Designed to potentially expand to perform EIS
-    
-    // Cyclic Voltammetry : mode = 0
-    const float SCAN_RATE = .02; // The rate of the CV scan in V/s
-    const int CYCLES = 100; // How many times the CV is performed
-    
-    /**
-     * Function: cvMode
-     * ----------------
-     * Implements the CV (Cyclic Voltammetry) mode of operation. The function performs a series
-     * of CV cycles until the specified number of cycles (CV_CYCLES) is reached. It controls the
-     * voltage output based on the elapsed time and scan rate, updating the DAC ports to generate
-     * the desired waveform.
-     *
-     *   The function utilizes a while loop to execute the CV cycles until the cycle count reaches
-     *   the desired number of cycles. It maintains the elapsed time since the start of the CV mode
-     *   using the `micros()` function. By comparing this elapsed time with the scan rate and direction,
-     *   it calculates the corresponding voltage value (`value`) for the DAC ports.
-     *
-     *   The function employs an if-else statement to determine whether the voltage should increment
-     *   or decrement based on the current direction (`forward`). The `adj_scan_rate` is used to adjust
-     *   the rate of change per unit time. If the calculated value exceeds the range of 0 to 1023,
-     *   it is clamped to the corresponding limit, and the direction is switched accordingly.
-     *
-     *   The function then calls the `portSelectDAC` function to configure the DAC ports with the
-     *   calculated voltage value. The DAC value is split into two bytes (`portdb_bytes[0]` and `portdb_bytes[1]`),
-     *   which are then assigned to the appropriate DAC ports. This enables the generation of the desired waveform.
-     *
-     *   Additionally, the current `value` is printed to the Serial Monitor using `Serial.println()`,
-     *   providing real-time feedback and monitoring of the CV operation.
-     */
-    void cvMode() {
-      const float scan_rate = SCAN_RATE * (10230.0 / 5000000.0);
-      bool forward = true;
-      int cycle = 0;
-      unsigned long start_time = micros();
-      unsigned long time = 0;
-      float value = 0;
-      int rounded_value = 0;
-      int sensor_value = 0;
-      int control_value = 0;
-      unsigned long last_read_time1 = 0;
-      unsigned long last_read_time2 = 0;
-      unsigned long sensor_data[10];
-      unsigned long control_data[10];
-      int sensor_data_index = 0;
-      const unsigned long read_interval1 = 100;   // 
-      const unsigned long read_interval2 = 1000;  // Microseconds between reads
-      const float inv_num_readings = 0.1;  // 1/10 for 10 readings
-    
-      while (cycle < CYCLES) {
-        time = micros() - start_time;
-    
-        if (forward) {
-          value = scan_rate * time;
-          rounded_value = (int)value;  // Typecast directly to int
-          if (rounded_value >= 1023) {
-            rounded_value = 1023;
-            forward = false;
-            start_time = micros();
-          }
-    
-        } else {
-          value = -scan_rate * time + 1023;
-          rounded_value = (int)value;  // Typecast directly to int
-    
-          if (rounded_value <= 0) {
-            rounded_value = 0;
-            forward = true;
-            start_time = micros();
-            cycle++;
-          }
+  // Christopher Hunt
+  // potentiostat.ino
+
+  // User Set Init Params
+  const int CELL_OUTPUT = A0; // Analog Read pin to read electrochemical cell output. Reads voltage data from TIA in circuit.
+  const int CV_VOLTAGE = A1; // Reads current voltage being supplied to the potentiostat.
+  const uint8_t TRIGGER_PIN = 13; // Trigger pin. Detecting push button to trigger the CV.
+  const int MODE = 0; // Mode 0 is CV. Designed to potentially expand to perform EIS
+  
+  // Cyclic Voltammetry : mode = 0
+  const float SCAN_RATE = .1; // The rate of the CV scan in V/s
+  const int CYCLES = 50; // How many times the CV is performed
+  
+  /**
+   * Function: cvMode
+   * ----------------
+   * Implements the CV (Cyclic Voltammetry) mode of operation. The function performs a series
+   * of CV cycles until the specified number of cycles (CV_CYCLES) is reached. It controls the
+   * voltage output based on the elapsed time and scan rate, updating the DAC ports to generate
+   * the desired waveform.
+   *
+   *   The function utilizes a while loop to execute the CV cycles until the cycle count reaches
+   *   the desired number of cycles. It maintains the elapsed time since the start of the CV mode
+   *   using the `micros()` function. By comparing this elapsed time with the scan rate and direction,
+   *   it calculates the corresponding voltage value (`value`) for the DAC ports.
+   *
+   *   The function employs an if-else statement to determine whether the voltage should increment
+   *   or decrement based on the current direction (`forward`). The `adj_scan_rate` is used to adjust
+   *   the rate of change per unit time. If the calculated value exceeds the range of 0 to 1023,
+   *   it is clamped to the corresponding limit, and the direction is switched accordingly.
+   *
+   *   The function then calls the `portSelectDAC` function to configure the DAC ports with the
+   *   calculated voltage value. The DAC value is split into two bytes (`portdb_bytes[0]` and `portdb_bytes[1]`),
+   *   which are then assigned to the appropriate DAC ports. This enables the generation of the desired waveform.
+   *
+   *   Additionally, the current `value` is printed to the Serial Monitor using `Serial.println()`,
+   *   providing real-time feedback and monitoring of the CV operation.
+   */
+  void cvMode() {
+    const float scan_rate = SCAN_RATE * (10230.0 / 5000000.0);
+    bool forward = true;
+    int cycle = 0;
+    unsigned long start_time = micros();
+    unsigned long time = 0;
+    float value = 0;
+    int rounded_value = 0;
+    int sensor_value = 0;
+    int control_value = 0;
+    unsigned long last_read_time = 0;
+    const unsigned long read_interval = 1000;  // Microseconds between reads
+  
+    while (cycle < CYCLES) {
+      time = micros() - start_time;
+  
+      if (forward) {
+        value = scan_rate * time;
+        rounded_value = (int)value;  // Typecast directly to int
+        if (rounded_value >= 1023) {
+          rounded_value = 1023;
+          forward = false;
+          start_time = micros();
         }
-    
-        // Send value to 10-bit DAC
-        PORTD = (rounded_value << 2) & 0xFC;
-        PORTB = (rounded_value >> 6) & 0x0F;
-    
-        // Read sensor data every read_interval1 microseconds
-        if (micros() - last_read_time1 >= read_interval1) {
-          last_read_time1 = micros();
-          sensor_data[sensor_data_index] = analogRead(CELL_OUTPUT);
-          control_data[sensor_data_index] = analogRead(CV_VOLTAGE);
-          sensor_data_index++;
-        }
-    
-        // Calculate average and send data every read_interval2 microseconds
-        if (micros() - last_read_time2 >= read_interval2) {
-          last_read_time2 = micros();
-          int sum_sensor = 0;
-          int sum_control = 0;
-          for (int i = 0; i < 10; i++) {
-            sum_sensor += sensor_data[i];
-            sum_control += control_data[i];
-          }
-          sensor_data_index = 0;
-          sum_sensor *= inv_num_readings;  // Multiply by the inverse to avoid division
-          sum_control *= inv_num_readings; 
-          sensor_value = sum_sensor;
-          control_value = sum_control;
-          Serial.print(control_value);
-          Serial.print('\t');
-          Serial.println(sensor_value);
+  
+      } else {
+        value = -scan_rate * time + 1023;
+        rounded_value = (int)value;  // Typecast directly to int
+  
+        if (rounded_value <= 0) {
+          rounded_value = 0;
+          forward = true;
+          start_time = micros();
+          cycle++;
         }
       }
-    }
-    
-    
-    
-    /**
-     * Function: setup
-     * ----------------
-     * Configures the initial setup and pin modes for an Arduino sketch.
-     * It sets the data direction registers (DDRx) for digital pins D2 to D7 and B0 to B3,
-     * configures pin C0 as an input pin, and initializes the Serial communication at 9600 baud rate.
-     *
-     * Pin Configuration:
-     *   - Digital pins D2 to D7 are set as output pins by setting the corresponding bits in DDRD to HIGH (1).
-     *   - Digital pins B0 to B3 are set as output pins by setting the corresponding bits in DDRB to HIGH (1).
-     *
-     * Serial Communication:
-     *   - Serial communication is initiated by calling `Serial.begin(9600)`.
-     *   - The baud rate is set to 9600 bits per second.
-     */
-    void setup() {
-      DDRD |= B11111100;
-      DDRB |= B00001111;
-      pinMode(CELL_OUTPUT, INPUT);
-      pinMode(CV_VOLTAGE, INPUT);
-    
-      // Set pins to 0v
-      PORTD = 0x00;
-      PORTB = 0x00;
-      Serial.begin(9600);
-    }
-    
-    
-    /**
-     * Function: loop
-     * ----------------
-     * The main execution loop for the Arduino sketch.
-     * It waits for the trigger pin to go HIGH and then executes the selected mode based on the MODE variable.
-     * After completing the mode execution, it waits for a specified delay before starting the sequence again.
-     *
-     */
-    void loop() {
-      // Wait for trigger pin to go HIGH
-      while (digitalRead(TRIGGER_PIN) == LOW) {
+  
+      // Send value to 10-bit DAC
+      PORTD = (rounded_value << 2) & 0xFC;
+      PORTB = (rounded_value >> 6) & 0x0F;
+  
+      // Calculate average and send data every read_interval2 microseconds
+      if (micros() - last_read_time >= read_interval) {
+        last_read_time = micros();
+        control_value = analogRead(CV_VOLTAGE);
+        sensor_value = analogRead(CELL_OUTPUT);
+        Serial.print(control_value);
+        Serial.print('\t');
+        Serial.println(sensor_value);
       }
-    
-      switch (MODE) {
-        case 0:
-          cvMode();
-          break;
-    
-        default:
-          Serial.print("Incorrect Mode.");
-          break;
-      }
-    
-      // Wait before starting the sequence again
-      delay(1000); // Adjust the delay between repetitions as needed
     }
-    
+  }
+  
+  
+  
+  /**
+   * Function: setup
+   * ----------------
+   * Configures the initial setup and pin modes for an Arduino sketch.
+   * It sets the data direction registers (DDRx) for digital pins D2 to D7 and B0 to B3,
+   * configures pin C0 as an input pin, and initializes the Serial communication at 9600 baud rate.
+   *
+   * Pin Configuration:
+   *   - Digital pins D2 to D7 are set as output pins by setting the corresponding bits in DDRD to HIGH (1).
+   *   - Digital pins B0 to B3 are set as output pins by setting the corresponding bits in DDRB to HIGH (1).
+   *
+   * Serial Communication:
+   *   - Serial communication is initiated by calling `Serial.begin(9600)`.
+   *   - The baud rate is set to 9600 bits per second.
+   */
+  void setup() {
+    DDRD |= B11111100;
+    DDRB |= B00001111;
+    pinMode(CELL_OUTPUT, INPUT);
+    pinMode(CV_VOLTAGE, INPUT);
+  
+    // Set pins to 0v
+    PORTD = 0x00;
+    PORTB = 0x00;
+    Serial.begin(9600);
+  }
+  
+  
+  /**
+   * Function: loop
+   * ----------------
+   * The main execution loop for the Arduino sketch.
+   * It waits for the trigger pin to go HIGH and then executes the selected mode based on the MODE variable.
+   * After completing the mode execution, it waits for a specified delay before starting the sequence again.
+   *
+   */
+  void loop() {
+    // Wait for trigger pin to go HIGH
+    while (digitalRead(TRIGGER_PIN) == LOW) {
+    }
+  
+    switch (MODE) {
+      case 0:
+        cvMode();
+        break;
+  
+      default:
+        Serial.print("Incorrect Mode.");
+        break;
+    }
+  
+    // Wait before starting the sequence again
+    delay(1000); // Adjust the delay between repetitions as needed
+  }
 \end{lstlisting}
 
 \newpage\subsubsection*{2}
@@ -432,35 +443,61 @@ with open(file_path, 'a') as file:
 \newpage
 \subsubsection*{3}
 \begin{lstlisting}
-    # Christopher Hunt
-    # graph.py
-    
-    import matplotlib.pyplot as plt
-    
-    def read_data(file_path):
-        x_values = []
-        y_values = []
-    
-        with open(file_path, 'r') as file:
-            for line in file:
-                data = line.strip().split('\t')
-                if len(data) == 2:
-                    data[0] = (.5/1023)*float(data[0])
-                    data[1] = ((4/1023)*float(data[1]) - 2)/12500*10**6
-                    x_values.append(data[0])
-                    y_values.append(data[1])
-    
-        return x_values, y_values
-    
-    data_file = 'data.txt'  # Update with your file path
-    x, y = read_data(data_file)
-    
-    plt.scatter(x, y)
-    plt.xlabel('V_in')
-    plt.ylabel('I_out')
-    plt.title('Data Plot')
-    plt.grid(True)
-    plt.show()
+  import matplotlib.pyplot as plt
+  import argparse
+  
+  def parse_data(file_path):
+      """
+      Parses data from a file and extracts x and y values for plotting.
+  
+      Parameters:
+          file_path (str): The path to the data file.
+  
+      Returns:
+          tuple: A tuple containing two lists. The first list contains the parsed x values,
+                 and the second list contains the parsed y values.
+      """
+      in_voltage_transfer_func = 5 / (10 * 1023)
+      out_voltage_transfer_func = (5 * 1000) / (69.3 * 1023 * 100)
+      x_values = []
+      y_values = []
+  
+      with open(file_path, 'r') as file:
+          for line in file:
+              data = line.strip().split('\t')
+              if len(data) == 2:
+                  data[0] = in_voltage_transfer_func * float(data[0])
+                  data[1] = out_voltage_transfer_func * float(data[1])
+                  x_values.append(data[0])
+                  y_values.append(data[1])
+          x_values = [sum(x_values[i:i + 5]) / 5 for i in range(0, len(x_values), 5)]
+          y_values = [sum(y_values[i:i + 5]) / 5 for i in range(0, len(y_values), 5)]
+      return x_values, y_values
+  
+  # Add command-line argument parsing
+  parser = argparse.ArgumentParser(description='Plot data from a file.')
+  parser.add_argument('data_file', type=str, help='Path to the data file.')
+  parser.add_argument('scan_rate', type=int, help='Scan Rate of CV')
+  args = parser.parse_args()
+  
+  # Use the data file path provided as a command-line argument
+  data_file = args.data_file
+  scan_rate = args.scan_rate
+  x, y = parse_data(data_file)
+  
+  # Save the new data to a file named "new_data.txt"
+  with open(f'FECN_{scan_rate}mVs_5cycles_data.txt', 'w') as file:
+      for i in range(len(x)):
+          file.write(f"{x[i]}\t{y[i]}\n")
+  
+  # Plot the graph and save it to "graph.png"
+  plt.plot(x, y)
+  plt.xlabel('Electric Potential | v')
+  plt.ylabel('Current | mA')
+  plt.title(f'Current vs. Electric Potential | Scan Rate: {scan_rate} mV/s')
+  plt.grid(True)
+  plt.savefig(f'FECN_{scan_rate}mVs_5cycles.png')
+  
 \end{lstlisting}
 
 \end{document}
