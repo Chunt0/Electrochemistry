@@ -134,7 +134,7 @@ The modifications to the original Meloni Design were made in line with theoretic
 \end{figure}
 
 \subsubsection*{Hardware Design}
-For our potentiostat design we are using an Arduino Uno as the main controller of the potentiostat. The Arduino Uno will be responsible for outputing the CV control signal and it will be responsible for sensing the potential applied at the test cell and the output voltage to be used to calculate the output current that passes through the working electrode of the test cell. Further data processing will be conducted using serial communication between the Arduino and a computer (see Software Design for greater detail).
+For our potentiostat design we are using an Arduino Uno as the main controller of the potentiostat. The Arduino Uno will be responsible for outputing the CV control signal and it will be responsible for sensing the potential applied at the test cell and the output voltage to be used to calculate the output current that passes through the working electrode of the test cell. Further data processing will be conducted using serial communication between the Arduino and a computer.
 
 The output control signal that will generate the CV begins with the Arduino's digital pins 2-11. These pins are connected to a corresponding 10 bit R2R ladder which acts as the potentiostats DAC. Since the digital output of each pin is 5 volts the possible output of this R2R ladder will range from 0 to 5 volts. In order to get an accurate reading of the potential being applied to the control amplifier, the Arduino will be sensing the voltage at the output of this R2R ladder, which is connected to the Arduino's analog input pin A1.
 
@@ -230,7 +230,7 @@ The goal of this project was to synthesize existing research on low cost potenti
 
 \subsection*{Acknowledgments}
 
-We express our heartfelt gratitude to Intel for providing the funding to Oregon State University (OSU) for this research internship. Their generous support has been pivotal in enabling this work.
+We express our gratitude to Intel for providing the funding to Oregon State University (OSU) for this research internship. Their generous support has been pivotal in enabling this work.
 
 Special thanks to Dr. Kelsey Stoerzinger, who not only served as the main professor and mentor but also facilitated access to her lab where the research was conducted. Her guidance, expertise, and encouragement have been invaluable to the success of this project.
 
