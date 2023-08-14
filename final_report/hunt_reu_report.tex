@@ -123,7 +123,7 @@ The Meloni Design showed excellent benchmark metrics compared to professional po
 \end{figure}
 
 
-There are three design components that are being adjusted from the Meloni Design. First, we changed how the control signal is generated. The Meloni Design uses a single PWM pin from the Arduino in combination with an RC filter and an op-amp in an integrator configuration to produce the control signal for the CV. For our design, we chose to use a 10-bit Digital-Analog Converter (DAC) using an R2R ladder. This offers two benefits: first, it offers greater resolution for the control signal - 10-bit precision instead of 8-bit with the PWM design. The R2R ladder is a fundamental circuit design used in entry-level electrical engineering coursework, whereas the PWM design may be considered more advanced. Second, we chose to swap the connections between the working electrode (WE) and the counter electrode (CE). This design decision was made with consultation from a BioLogic representative who claimed that since we are concerned about the current through the working electrode, it is assumed that measuring the current directly through it is the optimal design solution. Third, we will change the method used for current to voltage conversion. We will use the benchmark testing current maximum and minimum values to calculate an appropriate current measuring resistor and this voltage will be buffered, amplified, and then buffered again before being sent to the Arduino for further processing.
+There are three design components that are being adjusted from the Meloni Design. First, we changed how the control signal is generated. The Meloni Design uses a single PWM pin from the Arduino in combination with an RC filter and an op-amp in an integrator configuration to produce the control signal for the CV. For our design, we chose to use a 10-bit Digital-Analog Converter (DAC) using an R2R ladder. This offers two benefits: first, it offers greater resolution for the control signal - 10-bit precision instead of 8-bit with the PWM design. The R2R ladder is a fundamental circuit design used in entry-level electrical engineering coursework, whereas the PWM design may be considered more advanced. Second, we chose to swap the connections between the working electrode and the counter electrode. This design decision was made with consultation from a BioLogic representative who claimed that since we are concerned about the current through the working electrode, it is assumed that measuring the current directly through it is the optimal design solution. Third, we will change the method used for current to voltage conversion. We will use the benchmark testing current maximum and minimum values to calculate an appropriate current measuring resistor and this voltage will be buffered, amplified, and then buffered again before being sent to the Arduino for further processing.
 
 The modifications to the original Meloni Design were made in line with theoretical circuit analysis techniques. The use of an R2R ladder and the need for future students to perform circuit analysis to attenuate component values offer a greater learning opportunity for students. With this in mind the construction of the potentiostat used in this report can be understood as follows (fig. 3).
 
@@ -134,19 +134,25 @@ The modifications to the original Meloni Design were made in line with theoretic
 \end{figure}
 
 \subsubsection*{Hardware Design}
-For our potentiostat design we are using an Arduino Uno as the main controller of the potentiostat. The Arduino Uno will be responsible for outputing the CV control signal and it will be responsible for sensing the potential applied at the test cell and the output voltage to be used to calculate the output current that passes through the working electrode of the test cell. Further data processing will be conducted using serial communication between the Arduino and a computer.
+For our potentiostat design we are using an Arduino Uno as the main controller of the potentiostat. Additionally, an quad operational amplifier with be the ehart of the potentiostat hardware design, this will be powered by a +/- 12 volt power supply. The Arduino Uno will be responsible for outputing the CV control signal and it will be responsible for sensing the potential applied at the test cell and the output voltage to be used to calculate the output current that passes through the working electrode of the test cell. Further data processing will be conducted using serial communication between the Arduino and a computer.
 
 The output control signal that will generate the CV begins with the Arduino's digital pins 2-11. These pins are connected to a corresponding 10 bit R2R ladder which acts as the potentiostats DAC. Since the digital output of each pin is 5 volts the possible output of this R2R ladder will range from 0 to 5 volts. In order to get an accurate reading of the potential being applied to the control amplifier, the Arduino will be sensing the voltage at the output of this R2R ladder, which is connected to the Arduino's analog input pin A1.
 
 The next stage we will process the signal to fit within the desired potential range. For our experiment we are using a CV potential range from 0v to 0.5v. This can be achieved using a voltage divider to scale the control signal by one tenth. It should be noted that this value can be adjusted to fit other potential ranges depending on the needs of future researchers. This scaled signal is then fed to the non-inverting input terminal of the control amplifier. 
 
-The output of the control amplifier is connected to the CE of the test cell, while the reference electrode (RE) is connected to the inverting input of the control amplifier. The control amplifier is the heart of the potentiostat. This element is what ensures that the voltage at the RE follows the control signal. The WE is then connected to a measurement resistor which is then connected to ground. 
+The output of the control amplifier is connected to the counter electrode of the test cell, while the reference electrode is connected to the inverting input of the control amplifier. The control amplifier is the heart of the potentiostat. This element is what ensures that the voltage at the reference electrode follows the control signal. The working electrode is then connected to a measurement resistor which is then connected to ground. 
 
 This voltage is then scaled to fit within the Arduino's 0 to 5 volt sensing range. It is important to note that the scaling function and component values may need to be adjusted depending on the voltage that is detected across the measurement resistor. It is crucial that the signal can fit well within this range, if not, then the signal will become clipped and experimental data will be lost.
 
 For our experiment we expect a current within the bounds of -2mA to 2mA. This will then be amplified using an op amp in an inverting amplifier configuration and then the signal will be inverted again and biased to fit within the 0 to 5 volt range of the Arduino sensing range. We will see in the results that this configuration will be adjusted due to errors in the experimental set up.
 
 In addition to the potentiostat circuit, there is also a push button that is used to initialize the CV experiment. This takes a 5v signal from the Arduino, passes it to a button, which then completes a circuit through a resistor to ground, when the 5v is sensed it will begin the CV sweep.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.9\linewidth]{hardware_design.png}
+  \caption{Hardware Design | The red, white, and blue wires connect to the Working, Reference, and Counter electrodes respectively.}
+\end{figure}
 
 \subsubsection*{Software Design}
 
@@ -171,7 +177,13 @@ For the complete parts list, experimental procedure and lab companion see the Su
 \subsection*{Results and Discussion}
 During testing of our custom-built potentiostat against a BioLogic VSP-300 potentiostat, the measured current response from the working electrode displayed discernible trends. The current fluctuated within the ranges of 0 to 0.4 volts, 0 to 0.5 volts, and 0 to 0.6 volts for scan rates of 20 mV/s, 50 mV/s, and 100 mV/s, respectively (Figure 4). However, a notable disparity emerged when compared to the BioLogic potentiostat's measurements, with the absence of the expected `duck shaped' cyclic voltammogram.
 
-The consistency observed in the current response, despite the disparity with the expected cyclic voltammogram, reveals complex dynamics within the potentiostat's function. The discrepancy may point to a limitation or error in the potentiostat design itself. Several factors might have contributed to these unexpected results.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.9\linewidth]{lab_test.png}
+  \caption{Ferri/ferrocyanide Redox Reaction Test}
+\end{figure}
+
+The consistency observed in the current response, despite the disparity with the expected cyclic voltammogram, reveals complex dynamics within the potentiostat's function. The discrepancy may point to a limitation or error in the potentiostat design itself. When analyzing the data collected from the DIY potentiostat we see noteable events occuring at approximately 0.07 v, 0.12 v, 0.18 v, 0.23 v, 0.28 v, 0.32 v, 0.38 v, and 0.43 v. These events show characteristics of capacitor charging and rapid discharging events. The occurs at the near the same potential despite the scan rate. Several factors might have contributed to these unexpected results.
 
 Extensive hardware troubleshooting was conducted. Each signal processing step within the hardware was tested using signals in the expected range of the electrochemical cell. In isolated testing scenarios, the hardware produced the expected values. The success in isolated hardware testing adds complexity to the observed limitation in the current range when connected to the actual electrochemical cell. The divergence between the isolated testing and real-world application highlights a critical area of investigation.
 
@@ -179,7 +191,7 @@ Though the hardware was designed according to specifications, the observed limit
 \begin{enumerate}
     \item \textbf{Poor Hardware Design}: The entire architecture might not have been optimal for the specific application, leading to inherent limitations.
     \item \textbf{Component or Breadboard Issues}: The use of specific components or the breadboard itself might have introduced unexpected behaviors or constraints.
-    \item \textbf{Choice of Operational Amplifier}: The chosen operational amplifier for the design may not have been suitable as the control amplifier. This could result in inadequate current driving within the cell, thereby causing the observed limitation.
+    \item \textbf{Choice of Operational Amplifier}: The chosen operational amplifier (LT074 Op Amp) for the design may not have been suitable as the control amplifier. This could result in inadequate current driving within the cell, thereby causing the observed limitation.
 \end{enumerate}
 
 The multifaceted nature of the potential errors presents a challenge in pinpointing the exact cause. Further detailed analysis and redesign may be required to isolate and rectify the underlying issues. The findings from this study provide valuable insights into the complexities of custom potentiostat design. While the observed trends and successful isolated testing demonstrate a degree of functionality, the disparity with expected results points to critical areas for improvement.
@@ -225,12 +237,14 @@ Further investigation into the specific components, hardware design, and choice 
 Despite existing errors in our DIY potentiostat design, this research highlights potential success. With further time and assistance from electrical engineering professionals, achieving a DIY design that rivals lab-grade instruments may be possible.
 
 \subsection*{Conclusion}
-The goal of this project was to synthesize existing research on low cost potentiostat designs and to attempt to develop a comprehensive educational guide for students to pursue electrochemical engineering research. Although the finished product of our design did not adequately meet the benchmarking required to replace lab grade instruments, there was a wealth of educational benefits that were gained through this process. 
+The aim of this project was to consolidate existing research on cost-effective potentiostat designs and create a comprehensive educational resource for students engaging in electrochemical engineering research. While the final iteration of our design did not meet the benchmarking standards necessary to replace lab instruments, the process yielded valuable educational insights.
+
+The developed DIY potentiostat demonstrated a consistent systematic error pattern rather than random variability. Although it may not be suitable for conducting precise experiments, it lays the foundation for deeper exploration and hardware calibration. This opens up opportunities to refine the DIY potentiostat design and align it more closely with benchmarking criteria. By following the lab procedures in the supplemental materials sections and with appropriate guidance, students can gain valuable educational insights with respect to electrochemistry and electrical engineering.
 
 
 \subsection*{Acknowledgments}
 
-We express our gratitude to Intel for providing the funding to Oregon State University (OSU) for this research internship. Their generous support has been pivotal in enabling this work.
+We express our gratitude to Intel for providing the funding to Oregon State University for this research internship. Their generous support has been pivotal in enabling this work.
 
 Special thanks to Dr. Kelsey Stoerzinger, who not only served as the main professor and mentor but also facilitated access to her lab where the research was conducted. Her guidance, expertise, and encouragement have been invaluable to the success of this project.
 
@@ -251,7 +265,54 @@ Rowe AA, Bonham AJ, et al. (2011) CheapStat: An Open-Source, ‘‘Do-It-Yoursel
 
 \newpage
 \section*{Supplemental Material}
+\subsection*{FeCN Measurement}
+\subsubsection*{Background on the Importance of Measurement and Objective:}
+An outersphere redox couple changes oxidation state via electron transferto/from an electrode surface. This has some associated reversible potential:
+\[ [Fe^{|||}(CN)_6]^{3-} + 1e^- \leftrightarrow [Fe^{||}(CN)_6]^{4-}\]
+If you have a mixture of these two salts and hold the working electrode below this potential (smaller/negative voltages), ferricyanide will be reduced, giving a negative current. Above it, ferrocyanide will be oxidized, giving a positive current. The current will initially be high in magnitude (due to some chargin current and the presence of reactants near the surface) and decay to some steady state value (which reflects how quickly the reactant can diffuse to the electrode surface). We often measure such reactions by cyclic Voltammetry where the voltage is swept at a given scan rate ($v$), turning this profile into a characteristic duck-like shape. The Randles Sevick equation describes the effect of $v$ on the peak current ($I_p$) for a reversible process:
+\[ I_p = (2.69*10^5) AD^{0.5}Cv^{0.5}\]
+Where $A$ is the electrode surface area ($cm^2$), $D$ is the diffusion coefficient ($\frac{cm^2}{s}$) and $C$ is the concentration of electroactive species in the bulk solution ($\frac{mol}{cm^3}$).
+\subsubsection*{Safety}
+Understand the hazards of the electrolyte you are using and review any pertinent SDSs; secondary containment is suggested in case of spills. Note that ferri/feroocyanide should not be used in acidic electrolyte as this can cause cleavage  of the -CN groups, yielding a toxic gas. Performed in the range around the reversible potential suggested here the experiment should be fine to perform without ventiliation, but it's suggested to perform the experiment in the hood for added caution.
 
+\subsubsection*{Materials}
+\begin{itemize}
+  \item Clean glass (neutral or alkaline electrolyte) or PTFE (alkaline) electrochemical cell (see glassware cleaning SOP)
+  \begin{itemize}
+    \item Note: Fe is notorious for diffusing into glass and gives it a yellow hue that is nearly impossible to remove. Please perform experiment in a designated cell.
+  \end{itemize}
+  \item 2 clean graphite rode (or other working and counter electrodes)
+  \item 1 clean sparge bar, or pipette tip on gas line (suggested)
+  \begin{itemize}
+    \item Note: Fe is notorious for diffusing into glass and gives it a yellow hue that is nearly impossible to remove. Please perform experiment in a designated cell.
+  \end{itemize}
+  \item Reference electrode. Be sure to rinse this copiously with Millipure water as they are stored in salt solution (e.g. hold under flow while rotating for a few seconds).
+  \item Clean stir bar and stir plate
+  \item Potentiostat
+\end{itemize}
+\subsubsection*{Procedure}
+\begin{enumerate}
+  \item Prepare your electrolye (suggestion: 0.1 M KOH + 5 mM each of Fe(III) and Fe(II) salts) within your electrochemical cell. Use Millipure water (make sure the reading is 18.2 M$\Omega$), measuring volume with a graduated cylinder marked for water only. Add required salts and mix. Note all details in your lab book.
+  \begin{itemize}
+    \item Suggestion: KOH is in big pellets; measure this first, then calulate how much Fe(III), Fe(II) and water you need to hit the desired composition.
+  \end{itemize}
+  \item Begin sparging and stirring the electrolyte volume with $N_2$. The objective is to displace $O_2$, which will give an additional Faradaic current (from the oxygen reduction reaction). The smaller the bubbles the quicker this will happen. Note the time in your lab book (do this for ~30 minutes).
+  \item Secure the elctrodes within your cell. Some fit nicely via holders/O-rings, others you balance with an electrochemical clip or affix with lab tape.
+  \item Connect the lab potentiostat leads, being careful not to short them or touch any metal to them.
+  \begin{itemize}
+    \item Working Electrode: Carbon rod (or otherwise)
+    \item Counter Electrode: Carbon rod (or otherwise)
+    \item Reference Electrode: Ag/AgCl reference electrode
+  \end{itemize}
+  \item Perform a CV 0 volts to 0.5 volts at scan rates of 20, 50, and 100 $\frac{mV}{s}$ for 5 cycles each without stirring. Note the expected maximum and minimum current range to attenuate DIY potentiostat current to voltage conversion.
+  \item Attenuate current to voltage components in hardware to fit adequately read the expected current. 
+  \item Disconnect the lab potentiostat and reconnect it to the DIY potentiostat. Conduct the experiment again, recording each scan rate for 5 cycles each.
+\end{enumerate}
+  \subsubsection*{References}
+  \begin{itemize}
+    \item https://pubs.acs.org/doi/pdf/10.1021/ed200604m
+    \item https://pubs.acs.org/doi/pdf/10.1021/ed073p808
+  \end{itemize}
 \newpage
 \section*{Appendix}
 \subsubsection*{1}
