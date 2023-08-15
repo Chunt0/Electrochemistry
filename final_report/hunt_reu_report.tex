@@ -335,7 +335,7 @@ Rowe AA, Bonham AJ, et al. (2011) CheapStat: An Open-Source, ‘‘Do-It-Yoursel
 
 \newpage
 \section*{Supplemental Material}
-\subsection*{FeCN Measurement}
+\subsection*{Ferri/ferrocyanide Readox Reaction Lab Procedure}
 \subsubsection*{Background on the Importance of Measurement and Objective:}
 An outersphere redox couple changes oxidation state via electron transferto/from an electrode surface. This has some associated reversible potential:
 \[ [Fe^{|||}(CN)_6]^{3-} + 1e^- \leftrightarrow [Fe^{||}(CN)_6]^{4-}\]
@@ -384,6 +384,60 @@ Understand the hazards of the electrolyte you are using and review any pertinent
 \item https://pubs.acs.org/doi/pdf/10.1021/ed200604m
 \item https://pubs.acs.org/doi/pdf/10.1021/ed073p808
 \end{itemize}
+\newpage
+
+\subsection*{DIY Potentiostat Hardware Implementation}
+\subsubsection*{Equipment}
+\begin{itemize}
+  \item Arduino Uno
+  \item Dual Power supply
+  \item Oscilloscope
+  \item Digital Multimeter
+  \item Breadboard
+  \item 20 gauge copper insulated copper wire (multiple colors is helpful)
+  \item LT074 Operational Amplifier
+  \item 33 1k $\Omega$ resistors
+  \item 10k $\Omega$ potentiometer
+  \item 48 nF capacitor
+  \item 1 68.5 k $\Omega$ resistor 
+  \item 100 $\Omega$ resistor
+  \item Push Button
+\end{itemize}
+\subsubsection*{Schematic}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\linewidth]{diy_design.png}
+  \caption*{DIY Potentiostat Hardware Schematic}
+\end{figure}
+\subsubsection*{Stage 0: Start CV Button}
+The method we chose to control when the Arduino begins it's CV is with a push button. When pushed the Arduino will detect a 5v signal at pin 13, this will start the function generator and the signal detection.
+
+To accomplish this we will take a 5v signal from the Arduino, pass it to one connection of a push button. On the other connection of the button we will connect to pin 13 and to a 1k $\Omega$ resistor to ground. When the button is pushed, the circuit is completed and pin 13 will detect a voltage.
+\subsubsection*{Stage 1: 10-bit DAC}
+The 10-bit DAC design is based on an R2R ladder. The value of R is 1k $\Omega$ resistor. The pins sending signals to this 10-bit DAC are pins 2-11 from the Arduino, where pin 2 is the least significant bit and 11 is the most significant. The output node of this DAC will have a 48 nF capacitor connecting it to ground in order to smooth out the analog signal generator by this DAC. Pin A1 is also connected to this output node in order to track the voltage being applied to the control amplifier.
+\subsubsection*{Stage 2: Control Signal Scaling}
+For our specific CV range we need to scale the control signal from 0-5 volts to 0-0.5 volts. We chose to use a 10k $\Omega$ potentiometer as a voltage divider to scale the control signal. The scaled output will be sent to the non-inverting input of the potentiostat's control amplifier. 
+
+This stage can be adjusted depending on the desired CV range.
+
+\subsubsection*{Stage 3: Control Amplifier}
+For the control amplifier we have the control signal at the non-inverting input, the reference electrode connected to the inverting input and the counter electrode is connected to the control amplifier output.
+
+In our design there were errors in the current passing through the working electrode. We have speculated that the operational amplifier used as the control amplifier may not be appropriate to adequately control the electrochemical cell. Feel free to experiment with other op amps if this configuration does not produce desired results.
+
+\subsubsection*{Stage 4: Measurment Resistor}
+The working electrode is connected to a 100 $\Omega$ resistor which is connected to ground. That same node is connected to the non-inverting input of an op amp for output voltage scaling. The voltage across this measurement resistor is key to detecting the current across the electrochemical cell.
+
+\subsubsection*{Stage 5: Output Voltage Scaling}
+For our experiment, the current detected across the cell was not in the expected range. When using a digital multimeter to detect the voltage we found that it fluctuated between 0 to 0.6 mA. In order to scale this to be appropriately detected by the Arduino's analog input pins, we used an op amp in a non-inverting amplification configuration. At the output of this op amp we connect a 68.5 k $\Omega$ resistor and a 1 k $\Omega$ resistor in series. The inverting input of the op amp is connected to that node, generating an output gain of approximately 69.5. The output is then buffered and sent to the Arduino's analog input pin A0 for processing.
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\linewidth]{hardware_design.png}
+  \caption*{Implementation of DIY Potentiostat Hardware Design | The red, white, and blue wires connect to the Working, Reference, and Counter electrodes respectively.}
+  \end{figure}
+
 \newpage
 \section*{Appendix}
 \subsubsection*{1}
